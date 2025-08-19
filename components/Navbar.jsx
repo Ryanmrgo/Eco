@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700">
       <Image
         className="cursor-pointer w-28 md:w-32"
-        onClick={() => router.push('/')}
+        onClick={() => router.push('/')} 
         src={assets.logo}
         alt="logo"
       />
@@ -38,7 +38,7 @@ const Navbar = () => {
       </div>
 
       <ul className="hidden md:flex items-center gap-4 ">
-        <Image className="w-4 h-4" src={assets.search_icon} alt="search icon" />
+  <Image className="w-4 h-4" src={assets.search_icon} alt="search icon" />
         {
           user
             ? <>
