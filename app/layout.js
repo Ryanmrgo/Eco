@@ -4,10 +4,12 @@ import { AppContextProvider } from "@/context/AppContext";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
 
+import ClientNavbarWrapper from "@/components/ClientNavbarWrapper";
+
 const outfit = Outfit({ subsets: ['latin'], weight: ["300", "400", "500"] })
 
 export const metadata = {
-  title: "QuickCart - GreatStack",
+  title: "EcoHive",
   description: "E-Commerce with Next.js ",
 };
 
@@ -18,10 +20,11 @@ export default function RootLayout({ children }) {
         <body className={`${outfit.className} antialiased text-gray-700`} >
           <Toaster />
           <AppContextProvider>
+            <ClientNavbarWrapper />
             {children}
           </AppContextProvider>
         </body>
       </html>
-      </ClerkProvider>
+    </ClerkProvider>
   );
 }

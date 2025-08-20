@@ -20,6 +20,32 @@
 # production
 /build
 
+# turbo
+.turbo/
+
+# lock files (optional, if you don't want to track them)
+# package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# logs
+logs/
+*.log
+
+# IDE and OS
+.vscode/
+.idea/
+Thumbs.db
+
+# backup files
+*.bak
+*.tmp
+
+# ignore send map's node_modules and build
+/send map/send map/node_modules/
+/send map/send map/.next/
+/send map/send map/build/
+
 # misc
 .DS_Store
 *.pem

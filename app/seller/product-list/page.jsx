@@ -75,7 +75,7 @@ const ProductList = () => {
                   </td>
                   <td className="px-4 py-3 max-sm:hidden">{product.category}</td>
                   <td className="px-4 py-3">${product.offerPrice}</td>
-                  <td className="px-4 py-3 max-sm:hidden">
+                  <td className="px-4 py-3 max-sm:hidden flex gap-2">
                     <button onClick={() => router.push(`/product/${product._id}`)} className="flex items-center gap-1 px-1.5 md:px-3.5 py-2 bg-green-600 text-white rounded-md">
                       <span className="hidden md:block">Visit</span>
                       <Image
@@ -83,6 +83,29 @@ const ProductList = () => {
                         src={assets.redirect_icon}
                         alt="redirect_icon"
                       />
+                    </button>
+                    <button
+                      onClick={async () => {
+                        if (!confirm('Are you sure you want to delete this product?')) return;
+                        try {
+                          setLoading(true);
+                          const token = await getToken();
+                          const { data } = await axios.delete(`/api/product/delete?id=${product._id}`, { headers: { Authorization: `Bearer ${token}` } });
+                          if (data.success) {
+                            setProducts(products.filter(p => p._id !== product._id));
+                            toast.success('Product deleted');
+                          } else {
+                            toast.error(data.error || 'Failed to delete');
+                          }
+                        } catch (error) {
+                          toast.error(error.message);
+                        } finally {
+                          setLoading(false);
+                        }
+                      }}
+                      className="flex items-center gap-1 px-2 py-2 bg-red-600 text-white rounded-md text-xs"
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>
