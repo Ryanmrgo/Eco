@@ -1,5 +1,8 @@
 import logo from "./logo.png";
 import recycle from "./recycle.png";
+import recycle_logo from "./recycle_logo.png";
+import handmade_basket from "./handmade_basket.png";
+import map_icon from "./map_icon.png";
 import search_icon from "./search_icon.svg";
 import user_icon from "./user_icon.svg";
 import cart_icon from "./cart_icon.svg";
@@ -50,6 +53,9 @@ import product_details_page_apple_earphone_image5 from "./product_details_page_a
 
 export const assets = {
   recycle,
+  recycle_logo,
+  handmade_basket,
+  map_icon,
   logo,
   search_icon,
   user_icon,

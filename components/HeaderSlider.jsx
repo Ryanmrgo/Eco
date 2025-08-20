@@ -6,27 +6,27 @@ const HeaderSlider = () => {
   const sliderData = [
     {
       id: 1,
-      title: "Experience Pure Sound - Your Perfect Headphones Awaits!",
-      offer: "Limited Time Offer 30% Off",
-      buttonText1: "Buy now",
-      buttonText2: "Find more",
-  imgSrc: assets.recycle,
+      title: "Welcome To Eco-Hive, Let's make our Earth Less Pollute with Recycling",
+      offer: "Recycle.Shop.Repeat",
+      buttonText1: "Log in ",
+      buttonText2: "Sign Up",
+  imgSrc: assets.recycle_logo,
     },
     {
       id: 2,
-      title: "Next-Level Gaming Starts Here - Discover PlayStation 5 Today!",
-      offer: "Hurry up only few lefts!",
+      title: "Buy and Sell Good recycable Items to save our Planet Earth!",
+      offer: "Catch the Items with Reasonable Price",
       buttonText1: "Shop Now",
       buttonText2: "Explore Deals",
   imgSrc: assets.recycle,
     },
     {
       id: 3,
-      title: "Power Meets Elegance - Apple MacBook Pro is Here for you!",
-      offer: "Exclusive Deal 40% Off",
+      title: "Explore Handmade Products",
+      offer: "Handmade, Heartmade",
       buttonText1: "Order Now",
-      buttonText2: "Learn More",
-  imgSrc: assets.recycle,
+      buttonText2: "Explore Deals",
+  imgSrc: assets.handmade_basket,
     },
   ];
 
@@ -35,7 +35,7 @@ const HeaderSlider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % sliderData.length);
-    }, 3000);
+    }, 7000);
     return () => clearInterval(interval);
   }, [sliderData.length]);
 
