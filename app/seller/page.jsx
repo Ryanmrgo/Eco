@@ -16,17 +16,19 @@ const AddProduct = () => {
   const [category, setCategory] = useState('Plastic');
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData()
 
-    formData.append('name',name)
-    formData.append('description',description)
-    formData.append('category',category)
-    formData.append('price',price)
-    formData.append('offerPrice',offerPrice)
+  formData.append('name',name)
+  formData.append('description',description)
+  formData.append('category',category)
+  formData.append('price',price)
+  formData.append('offerPrice',offerPrice)
+  formData.append('quantity',quantity)
 
     for (let i = 0; i < files.length; i++) {
       formData.append('images',files[i])
@@ -116,7 +118,7 @@ const AddProduct = () => {
             required
           ></textarea>
         </div>
-        <div className="flex items-center gap-5 flex-wrap">
+  <div className="flex items-center gap-5 flex-wrap">
           <div className="flex flex-col gap-1 w-32">
             <label className="text-base font-medium" htmlFor="category">
               Category
@@ -136,6 +138,33 @@ const AddProduct = () => {
               <option value="HomeMade">HomeMade</option>
             </select>
           </div>
+           <div className="flex flex-col gap-1 w-32">
+            <label className="text-base font-medium" htmlFor="product-type">
+              Product Type
+            </label>
+            <select
+              id="product-type"
+              className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+            >
+              <option value="Refined">Refined</option>
+              <option value="Raw">Raw</option>
+            </select>
+          </div>
+          <div className="flex flex-col gap-1 w-32">
+            <label className="text-base font-medium" htmlFor="product-quantity">
+              Product Quantity
+            </label>
+            <input
+              id="product-quantity"
+              type="number"
+              min={0}
+              placeholder="0"
+              className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+              onChange={(e) => setQuantity(e.target.value)}
+              value={quantity}
+              required
+            />
+          </div>
           <div className="flex flex-col gap-1 w-32">
             <label className="text-base font-medium" htmlFor="product-price">
               Product Price
@@ -143,6 +172,7 @@ const AddProduct = () => {
             <input
               id="product-price"
               type="number"
+              min={0}
               placeholder="0"
               className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
               onChange={(e) => setPrice(e.target.value)}
@@ -157,6 +187,7 @@ const AddProduct = () => {
             <input
               id="offer-price"
               type="number"
+              min={0}
               placeholder="0"
               className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
               onChange={(e) => setOfferPrice(e.target.value)}

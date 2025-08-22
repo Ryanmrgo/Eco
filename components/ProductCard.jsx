@@ -31,6 +31,7 @@ const ProductCard = ({ product }) => {
 
             <p className="md:text-base font-medium pt-2 w-full truncate">{product.name}</p>
             <p className="w-full text-xs text-gray-500/70 max-sm:hidden truncate">{product.description}</p>
+            <p className="w-full text-xs text-gray-700 font-semibold">Qty: {product.quantity}</p>
             <div className="flex items-center gap-2">
                 <p className="text-xs">{4.5}</p>
                 <div className="flex items-center gap-0.5">
