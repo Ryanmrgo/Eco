@@ -30,7 +30,10 @@ const Navbar = () => {
         <Link href="/" className="hover:text-gray-900 transition">
           About Us
         </Link>
-        <Link href="/" className="hover:text-gray-900 transition">
+        <Link href="/about-us" className="hover:text-gray-900 transition">
+          About Us
+        </Link>
+        <Link href="/contact" className="hover:text-gray-900 transition">
           Contact
         </Link>
         <Link href="/report-waste" className="hover:text-green-700 transition">
