@@ -18,7 +18,7 @@ const HeaderSlider = () => {
       offer: "Catch the Items with Reasonable Price",
       buttonText1: "Shop Now",
       buttonText2: "Explore Deals",
-  imgSrc: assets.recycle,
+  imgSrc: assets.recycle, 
     },
     {
       id: 3,
