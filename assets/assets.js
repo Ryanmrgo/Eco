@@ -1,9 +1,8 @@
 import logo from "./logo.png";
-import recycle from "./recycle.jpg";
+import recycle from "./recycle.png";
 import recycle_logo from "./recycle_logo.png";
 import handmade_basket from "./handmade_basket.png";
 import map_icon from "./map_icon.png";
-import mandalay from "./mandalay.jpg";
 import search_icon from "./search_icon.svg";
 import user_icon from "./user_icon.svg";
 import cart_icon from "./cart_icon.svg";
@@ -57,7 +56,6 @@ export const assets = {
   recycle_logo,
   handmade_basket,
   map_icon,
-  mandalay,
   logo,
   search_icon,
   user_icon,
