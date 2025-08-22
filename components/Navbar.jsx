@@ -31,7 +31,7 @@ const Navbar = () => {
           About Us
         </Link>
         <Link href="/contact" className="hover:text-gray-900 transition">
-          Contact
+          Contact Us
         </Link>
         <Link href="/report-waste" className="hover:text-green-700 transition">
           Report Waste
