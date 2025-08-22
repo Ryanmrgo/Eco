@@ -23,7 +23,7 @@ const BannerText = () => (
     <p className="max-w-[343px] font-medium text-gray-800/60">
       Submit a ticket via map to report excess waste in your district
     </p>
-    <Link href="/report-waste" className="group flex items-center justify-center gap-1 px-12 py-2.5 bg-red-600 rounded text-white">
+    <Link href="/report-waste" className="group flex items-center justify-center gap-1 px-12 py-2.5 bg-red-600 rounded text-white hover:bg-red-500 transition">
       Report
       <Image
         className="group-hover:translate-x-1 transition"

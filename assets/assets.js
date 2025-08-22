@@ -1,6 +1,9 @@
 import logo from "./logo.png";
 import recycle from "./recycle.png";
 import mapMDY from "./mapMDY.png";
+import cupHolder from "./cupHolder.jpg";
+import cardCase from "./card_penCase.jpg";
+import bracelet from "./handmade_bracelet.jpg";
 import recycle_logo from "./recycle_logo.png";
 import handmade_basket from "./handmade_basket.png";
 import map_icon from "./map_icon.png";
@@ -57,6 +60,9 @@ export const assets = {
   recycle_logo,
   mapMDY,
   handmade_basket,
+  bracelet,
+  cupHolder,
+  cardCase,
   map_icon,
   logo,
   search_icon,
