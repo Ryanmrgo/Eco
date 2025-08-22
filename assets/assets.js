@@ -1,5 +1,6 @@
 import logo from "./logo.png";
 import recycle from "./recycle.png";
+import mapMDY from "./mapMDY.png";
 import recycle_logo from "./recycle_logo.png";
 import handmade_basket from "./handmade_basket.png";
 import map_icon from "./map_icon.png";
@@ -54,6 +55,7 @@ import product_details_page_apple_earphone_image5 from "./product_details_page_a
 export const assets = {
   recycle,
   recycle_logo,
+  mapMDY,
   handmade_basket,
   map_icon,
   logo,

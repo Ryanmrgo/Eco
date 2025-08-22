@@ -8,11 +8,10 @@ const Footer = () => {
       <div className="flex flex-col md:flex-row items-start justify-center px-6 md:px-16 lg:px-32 gap-10 py-14 border-b border-gray-500/30 text-gray-500">
         <div className="w-4/5">
           <Image className="w-28 md:w-32" src={assets.logo} alt="logo" />
-          <p className="mt-6 text-sm">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+          <p className="text-sm">
+            Eco-Hive is a digital marketplace designed to make sustainability simple and rewarding. From repurposed handmade goods to recyclable raw materials, you can shop, sell, and give waste a new life. Citizens can also report recyclable rubbish in public spaces with geotagged photos, helping municipal collectors recycle faster and keep our streets clean.
+
+By uniting people, businesses, and city services, Eco-Hive drives community engagement, a circular economy, and smarter urban living.
           </p>
         </div>
 
