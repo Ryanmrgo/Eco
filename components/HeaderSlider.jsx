@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
+import { useUser, SignInButton, SignUpButton } from "@clerk/nextjs";
 
 const HeaderSlider = () => {
+  const { isSignedIn } = useUser();
+
   const sliderData = [
     {
       id: 1,
@@ -61,15 +64,51 @@ const HeaderSlider = () => {
               <h1 className="max-w-lg md:text-[40px] md:leading-[48px] text-2xl font-semibold">
                 {slide.title}
               </h1>
-              <div className="flex items-center mt-4 md:mt-6 ">
-                <button className="md:px-10 px-7 md:py-2.5 py-2 bg-green-600 rounded-full text-white font-medium hover:bg-green-500 transition">
-                  {slide.buttonText1}
-                </button>
-                <button className="group flex items-center gap-2 px-6 py-2.5 font-medium ">
-                  {slide.buttonText2}
-                  <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
-                </button>
-              </div>
+              {(slide.id !== 1 || !isSignedIn) && (
+                <div className="flex items-center mt-4 md:mt-6 ">
+                  {slide.id === 1 && !isSignedIn ? (
+                    <>
+                      <SignInButton mode="modal">
+                        <button className="md:px-10 px-7 md:py-2.5 py-2 bg-green-600 rounded-full text-white font-medium hover:bg-green-500 transition">
+                          {slide.buttonText1}
+                        </button>
+                      </SignInButton>
+                      <SignUpButton mode="modal">
+                        <button className="group flex items-center gap-2 px-6 py-2.5 font-medium ">
+                          {slide.buttonText2}
+                          <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
+                        </button>
+                      </SignUpButton>
+                    </>
+                  ) : (
+                    <>
+                      {slide.id === 2 ? (
+                        <>
+                          <a href="/all-products">
+                            <button className="md:px-10 px-7 md:py-2.5 py-2 bg-green-600 rounded-full text-white font-medium hover:bg-green-500 transition">
+                              {slide.buttonText1}
+                            </button>
+                          </a>
+                          <button className="group flex items-center gap-2 px-6 py-2.5 font-medium ">
+                            {slide.buttonText2}
+                            <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button className="md:px-10 px-7 md:py-2.5 py-2 bg-green-600 rounded-full text-white font-medium hover:bg-green-500 transition">
+                            {slide.buttonText1}
+                          </button>
+                          <button className="group flex items-center gap-2 px-6 py-2.5 font-medium ">
+                            {slide.buttonText2}
+                            <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
+                          </button>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
             </div>
             <div className="flex items-center flex-1 justify-center">
               <Image
