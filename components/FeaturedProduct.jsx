@@ -5,21 +5,21 @@ import Image from "next/image";
 const products = [
   {
     id: 1,
-    image: assets.girl_with_headphone_image,
-    title: "Unparalleled Sound",
-    description: "Experience crystal-clear audio with premium headphones.",
+    image: assets.cardCase,
+    title: "CardBoard Pencil Case",
+    description: "Keep your stationery organized in an eco-friendly way with this durable cardboard pencil case. Lightweight, sustainable, and perfect for everyday use.",
   },
   {
     id: 2,
-    image: assets.girl_with_earphone_image,
-    title: "Stay Connected",
-    description: "Compact and stylish earphones for every occasion.",
+    image: assets.cupHolder,
+    title: "Crochet Cupholder",
+    description: "Add a touch of handmade charm to your drinks with this crochet cupholder. Reusable, stylish, and designed to keep your hands comfortable while holding hot or cold beverages.",
   },
   {
     id: 3,
-    image: assets.boy_with_laptop_image,
-    title: "Power in Every Pixel",
-    description: "Shop the latest laptops for work, gaming, and more.",
+    image: assets.bracelet, 
+    title: "Bracelets",
+    description: "Express your style with personalized beaded bracelets. Handmade, customizable, and crafted to reflect your unique personality or a perfect gift for someone special.",
   },
 ];
 
@@ -44,7 +44,7 @@ const FeaturedProduct = () => {
               <p className="text-sm lg:text-base leading-5 max-w-60">
                 {description}
               </p>
-              <button className="flex items-center gap-1.5 bg-green-600 px-4 py-2 rounded">
+              <button className="flex items-center gap-1.5 bg-green-600 px-4 py-2 rounded hover:bg-green-500 transition">
                 Buy now <Image className="h-3 w-3" src={assets.redirect_icon} alt="Redirect Icon" />
               </button>
             </div>

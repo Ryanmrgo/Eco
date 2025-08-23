@@ -37,7 +37,7 @@ const Navbar = () => {
           Report Waste
         </Link>
 
-        {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full">Seller Dashboard</button>}
+        {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full hover:bg-gray-100 transition">Seller Dashboard</button>}
 
       </div>
 
