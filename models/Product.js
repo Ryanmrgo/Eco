@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema({
     image: { type: Array, required: true },
     category: { type: String, required: true },
     quantity: { type: Number, required: true },
+    productType: { type: String, required: true },
     date: { type: Number, required: true }
 })
 

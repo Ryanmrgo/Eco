@@ -30,8 +30,9 @@ export async function POST(request) {
         const name = formData.get('name');
         const description = formData.get('description');
         const category = formData.get('category');
-        const price = formData.get('price');
-        const offerPrice = formData.get('offerPrice');
+    const price = formData.get('price');
+    const offerPrice = formData.get('offerPrice');
+    const productType = formData.get('productType');
 
         const files = formData.getAll('images');
 
@@ -68,9 +69,11 @@ export async function POST(request) {
             name,
             description,
             category,
-            price:Number(price),
-            offerPrice:Number(offerPrice),
+            price: Number(price),
+            offerPrice: Number(offerPrice),
             image,
+            quantity: Number(formData.get('quantity')),
+            productType,
             date: Date.now()
         })
 

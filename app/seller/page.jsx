@@ -17,18 +17,20 @@ const AddProduct = () => {
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
   const [quantity, setQuantity] = useState('');
+  const [productType, setProductType] = useState('Refined');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData()
 
-  formData.append('name',name)
-  formData.append('description',description)
-  formData.append('category',category)
-  formData.append('price',price)
-  formData.append('offerPrice',offerPrice)
-  formData.append('quantity',quantity)
+  formData.append('name', name)
+  formData.append('description', description)
+  formData.append('category', category)
+  formData.append('price', price)
+  formData.append('offerPrice', offerPrice)
+  formData.append('quantity', quantity)
+  formData.append('productType', productType)
 
     for (let i = 0; i < files.length; i++) {
       formData.append('images',files[i])
@@ -138,13 +140,16 @@ const AddProduct = () => {
               <option value="HomeMade">HomeMade</option>
             </select>
           </div>
-           <div className="flex flex-col gap-1 w-32">
+          <div className="flex flex-col gap-1 w-32">
             <label className="text-base font-medium" htmlFor="product-type">
               Product Type
             </label>
             <select
               id="product-type"
               className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+              value={productType}
+              onChange={e => setProductType(e.target.value)}
+              required
             >
               <option value="Refined">Refined</option>
               <option value="Raw">Raw</option>
