@@ -65,6 +65,7 @@ const Cart = () => {
                         </div>
                         <div className="text-sm hidden md:block">
                           <p className="text-gray-800">{product.name}</p>
+                          <p className="text-xs text-gray-500">Available: {product.quantity}</p>
                           <button
                             className="text-xs text-orange-600 mt-1"
                             onClick={() => updateCartQuantity(product._id, 0)}

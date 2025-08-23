@@ -106,6 +106,10 @@ const Product = () => {
                                         {productData.category}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td className="text-gray-600 font-medium">Available Quantity</td>
+                                    <td className="text-gray-800/50">{productData.quantity}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -16,11 +16,21 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: 'Invalid data' });
         }
 
-        // calculate amount using items
-        const amount = await items.reduce(async (acc, item) => {
+
+        // calculate amount and update product quantity atomically
+        let totalAmount = 0;
+        for (const item of items) {
             const product = await Product.findById(item.product);
-            return await acc + product.offerPrice * item.quantity;
-        }, 0)
+            if (!product) {
+                return NextResponse.json({ success: false, message: `Product not found: ${item.product}` });
+            }
+            if (product.quantity < item.quantity) {
+                return NextResponse.json({ success: false, message: `Not enough stock for ${product.name}` });
+            }
+            totalAmount += product.offerPrice * item.quantity;
+            product.quantity -= item.quantity;
+            await product.save();
+        }
 
         await inngest.send({
             name: 'order/created',
@@ -28,7 +38,7 @@ export async function POST(request) {
                 userId,
                 address,
                 items,
-                amount: amount + Math.floor(amount * 0.02),
+                amount: totalAmount + Math.floor(totalAmount * 0.02),
                 date: Date.now()
             }
         })

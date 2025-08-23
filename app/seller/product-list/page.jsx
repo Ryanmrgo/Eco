@@ -50,9 +50,8 @@ const ProductList = () => {
               <tr>
                 <th className="w-2/3 md:w-2/5 px-4 py-3 font-medium truncate">Product</th>
                 <th className="px-4 py-3 font-medium truncate max-sm:hidden">Category</th>
-                <th className="px-4 py-3 font-medium truncate">
-                  Price
-                </th>
+                <th className="px-4 py-3 font-medium truncate">Price</th>
+                <th className="px-4 py-3 font-medium truncate">Quantity</th>
                 <th className="px-4 py-3 font-medium truncate max-sm:hidden">Action</th>
               </tr>
             </thead>
@@ -75,6 +74,7 @@ const ProductList = () => {
                   </td>
                   <td className="px-4 py-3 max-sm:hidden">{product.category}</td>
                   <td className="px-4 py-3">MMK {product.offerPrice}</td>
+                  <td className="px-4 py-3">{product.quantity}</td>
                   <td className="px-4 py-3 max-sm:hidden flex gap-2">
                     <button onClick={() => router.push(`/product/${product._id}`)} className="flex items-center gap-1 px-1.5 md:px-3.5 py-2 bg-green-600 text-white rounded-md">
                       <span className="hidden md:block">Visit</span>
