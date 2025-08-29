@@ -117,6 +117,8 @@ const HeaderSlider = () => {
                 className="md:w-72 w-48"
                 src={slide.imgSrc}
                 alt={`Slide ${index + 1}`}
+                priority={index === 0}
+                sizes="(max-width: 768px) 50vw, 300px"
               />
             </div>
           </div>
