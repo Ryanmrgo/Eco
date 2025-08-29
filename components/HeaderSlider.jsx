@@ -2,34 +2,36 @@ import React, { useState, useEffect } from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import { useUser, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { useAppContext } from "@/context/AppContext";
 
 const HeaderSlider = () => {
   const { isSignedIn } = useUser();
+  const { t } = useAppContext();
 
   const sliderData = [
     {
       id: 1,
-      title: "Welcome To Eco-Hive, Let's make our Earth Less Pollute with Recycling",
-      offer: "Recycle.Shop.Repeat",
-      buttonText1: "Log in ",
-      buttonText2: "Sign Up",
-  imgSrc: assets.recycle_logo,
+      title: t('welcomeTitle'),
+      offer: t('welcomeOffer'),
+      buttonText1: t('login'),
+      buttonText2: t('signUp'),
+      imgSrc: assets.recycle_logo,
     },
     {
       id: 2,
-      title: "Buy and Sell Good recycable Items to save our Planet Earth!",
-      offer: "Catch the Items with Reasonable Price",
-      buttonText1: "Shop Now",
-      buttonText2: "Explore Deals",
-  imgSrc: assets.recycle,
+      title: t('buySellTitle'),
+      offer: t('buySellOffer'),
+      buttonText1: t('shopNow'),
+      buttonText2: t('exploreDeals'),
+      imgSrc: assets.recycle,
     },
     {
       id: 3,
-      title: "Explore Handmade Products",
-      offer: "Handmade, Heartmade",
-      buttonText1: "Order Now",
-      buttonText2: "Explore Deals",
-  imgSrc: assets.handmade_basket,
+      title: t('exploreHandmade'),
+      offer: t('handmadeOffer'),
+      buttonText1: t('orderNow'),
+      buttonText2: t('exploreDeals'),
+      imgSrc: assets.handmade_basket,
     },
   ];
 

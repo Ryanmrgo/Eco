@@ -23,6 +23,101 @@ export const AppContextProvider = (props) => {
     const [userData, setUserData] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
     const [cartItems, setCartItems] = useState({})
+    // i18n language state (en | my)
+    const [lang, setLang] = useState('en')
+
+    // Centralized translation strings. Add keys as needed.
+    const translations = {
+        en: {
+            home: 'Home',
+            shop: 'Shop',
+            aboutUs: 'About Us',
+            contactUs: 'Contact Us',
+            reportWaste: 'Report Waste',
+            sellerDashboard: 'Seller Dashboard',
+            account: 'Account',
+            myOrders: 'My Orders',
+            products: 'Products',
+            cart: 'Cart',
+            company: 'Company',
+            privacyPolicy: 'Privacy Policy',
+            getInTouch: 'Get in touch',
+            welcomeTitle: "Welcome To Eco-Hive, Let's make our Earth Less Polluted with Recycling",
+            welcomeOffer: 'Recycle. Shop. Repeat',
+            login: 'Log in',
+            signUp: 'Sign Up',
+            buySellTitle: 'Buy and sell recyclable items to save our planet!',
+            buySellOffer: 'Catch the items with a reasonable price',
+            exploreHandmade: 'Explore Handmade Products',
+            handmadeOffer: 'Handmade, Heartmade',
+            orderNow: 'Order Now',
+            exploreDeals: 'Explore Deals',
+            shopNow: 'Shop Now',
+            popularProducts: 'Popular products',
+            seeMore: 'See more',
+            mostBuyProducts: 'Most Bought Products',
+            buyNow: 'Buy now',
+            subscribeHeadline: 'Subscribe now & get 20% off',
+            subscribeSub: 'Join the Eco-Hive community today! Get exclusive updates, early access to eco-friendly products, and enjoy 20% off your first order.',
+            subscribePlaceholder: 'Enter your email',
+            subscribeButton: 'Subscribe',
+            reportBannerTitle: 'A Cleaner City Starts with You: Report Waste.',
+            reportBannerSubtitle: 'Submit a ticket via the map to report excess waste in your district',
+            report: 'Report',
+            footerAbout: 'Eco-Hive is a digital marketplace designed to make sustainability simple and rewarding. From repurposed handmade goods to recyclable raw materials, you can shop, sell, and give waste a new life. Citizens can also report recyclable rubbish in public spaces with geotagged photos, helping municipal collectors recycle faster and keep our streets clean. By uniting people, businesses, and city services, Eco-Hive drives community engagement, a circular economy, and smarter urban living.'
+        },
+        my: {
+            home: 'ပင်မစာမျက်နှာ',
+            shop: 'ဆိုင်',
+            aboutUs: 'ကျွန်ုပ်တို့အကြောင်း',
+            contactUs: 'ဆက်သွယ်ရန်',
+            reportWaste: 'အမှိုက် အချက်ပေးရန်',
+            sellerDashboard: 'ရောင်းချသူ ဒက်ရှ်ဘုတ်',
+            account: 'အကောင့်',
+            myOrders: 'အော်ဒါများ',
+            products: 'ပစ္စည်းများ',
+            cart: 'ဈေးလှည်း',
+            company: 'ကုမ္ပဏီ',
+            privacyPolicy: 'ကိုယ်ရေးကာကွယ်မှု မူဝါဒ',
+            getInTouch: 'ဆက်သွယ်ရန်',
+            welcomeTitle: 'Eco-Hive သို့ ကြိုဆိုပါသည်၊ ပြန်လည်အသုံးပြုခြင်းဖြင့် ကမ္ဘာလောကကို ပိုမိုသန့်ရှင်းစေကြပါစို့',
+            welcomeOffer: 'ပြန်သုံး၊ ဈေးဝယ်၊ ထပ်လုပ်',
+            login: 'လော့ဂ်အင်',
+            signUp: 'စာရင်းသွင်း',
+            buySellTitle: 'ပြန်လည်အသုံးပြုနိုင်သော ပစ္စည်းများကို ဝယ်ယူ ရောင်းချပြီး ကမ္ဘာကို ကယ်ဆယ်ကြပါစို့!',
+            buySellOffer: 'တန်ချိန်ညီညွတ်သော စျေးနှုန်းဖြင့် လက်လှမ်းမီမှု',
+            exploreHandmade: 'လက်ဖန်တီး ပစ္စည်းများ ရှာဖွေပါ',
+            handmadeOffer: 'လက်ဖန်တီးမှု၊ နှလုံးဖန်တီးမှု',
+            orderNow: 'ယခု မှာယူပါ',
+            exploreDeals: 'စျေးကောင်းများ ရှာဖွေပါ',
+            shopNow: 'အခု ဝယ်ပါ',
+            popularProducts: 'လူကြိုက်များ သော ပစ္စည်းများ',
+            seeMore: 'နောက်ထပ် ကြည့်ရန်',
+            mostBuyProducts: 'အများဆုံး ဝယ်ယူခဲ့သည့် ပစ္စည်းများ',
+            buyNow: 'ယခု ဝယ်မည်',
+            subscribeHeadline: 'ယခု Subscribe လုပ်ပြီး ၂၀% လျှော့စျေး ရယူပါ',
+            subscribeSub: 'Eco-Hive ကိုယနေ့ ပါဝင်ပါ! သီးသန့်သတင်းများ၊ သစ်လွင်သော ပစ္စည်းများကို အစောဆုံးရယူပြီး ပထမဆုံးမှာယူမှုမှာ ၂၀% လျှော့စျေး ရယူပါ။',
+            subscribePlaceholder: 'Email ထည့်ပါ',
+            subscribeButton: 'Subscribe',
+            reportBannerTitle: 'သင်နှင့် စတင်ပါ: မြို့ကို သန့်ရှင်းအောင် အမှိုက်ကို အချက်ပေးပါ',
+            reportBannerSubtitle: 'ခွင့်ပြုထားသော မြေပုံမှတစ်ဆင့် သင်၏ နေရာဒေသရှိ အလွန်များသည့် အမှိုက်ကို တိုင်ပြပါ',
+            report: 'တိုင်ပြမည်',
+            footerAbout: 'Eco-Hive သည် တာရှည်တည်တံ့မှုကို လွယ်ကူ၍ အကျိုးပြုအောင် ဖန်တီးထားသော ဒီဂျစ်တယ် စျေးကွက်ဖြစ်ပါသည်။ လက်ဖန်တီး ပစ္စည်းများ၊ ပြန်လည်အသုံးပြုနိုင်သော အရင်းအမြစ်များကို တစ်နေရာထဲတွင် ဝယ်ရောင်းနိုင်ပြီး အမှိုက်ကို အသစ်ရဲ့ အသက်ပေးပါသည်။ မြို့ပေါ်တွင် တွေ့ရှိသော အမှိုက်မျိုးစုံကို ဓာတ်ပုံနှင့် တည်နေရာဖြင့် တိုင်ပေးနိုင်သဖြင့် မူပိုင်အာဏာရှိ ဝန်ထမ်းများ စနစ်တကျစုဆောင်း ပြန်လည်အသုံးပြုရာ မြန်ဆန်စေပါသည်။ လူထု၊ စီးပွားရေးလုပ်ငန်းများ နှင့် မြို့ပိုင် ဝန်ဆောင်မှုများကို ညှိနှိုင်းပေးကာ ကွန်ယက်စက်ဝိုင်း စီးပွားရေးနှင့် ပိုမို ထိရောက်သော မြို့ပြဘဝကို တိုးတက်စေပါသည်။'
+        }
+    }
+
+    const t = (key) => translations[lang]?.[key] || translations.en[key] || key
+
+    const toggleLanguage = () => setLang(prev => prev === 'en' ? 'my' : 'en')
+
+    // persist language preference
+    useEffect(() => {
+        const stored = typeof window !== 'undefined' ? localStorage.getItem('eco-lang') : null;
+        if (stored && (stored === 'en' || stored === 'my')) setLang(stored);
+    }, [])
+    useEffect(() => {
+        if (typeof window !== 'undefined') localStorage.setItem('eco-lang', lang)
+    }, [lang])
 
     const fetchProductData = async () => {
         try {
@@ -149,7 +244,8 @@ export const AppContextProvider = (props) => {
         products, fetchProductData,
         cartItems, setCartItems,
         addToCart, updateCartQuantity,
-        getCartCount, getCartAmount
+        getCartCount, getCartAmount,
+        lang, toggleLanguage, t
     }
 
     return (
