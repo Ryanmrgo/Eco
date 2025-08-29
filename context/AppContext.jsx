@@ -65,6 +65,17 @@ export const AppContextProvider = (props) => {
             reportBannerSubtitle: 'Submit a ticket via the map to report excess waste in your district',
             report: 'Report',
             footerAbout: 'Eco-Hive is a digital marketplace designed to make sustainability simple and rewarding. From repurposed handmade goods to recyclable raw materials, you can shop, sell, and give waste a new life. Citizens can also report recyclable rubbish in public spaces with geotagged photos, helping municipal collectors recycle faster and keep our streets clean. By uniting people, businesses, and city services, Eco-Hive drives community engagement, a circular economy, and smarter urban living.'
+            ,aboutHeadline: 'About Us',
+            aboutBody: 'EcoHive is an innovative platform connecting buyers and sellers while empowering communities to report waste directly to municipal authorities. Tag waste locations on a live map, highlight environmental concerns, and help create cleaner cities. Shop, report, and make a difference with EcoHive!',
+            aboutPoint1: 'Buy and sell products easily and securely.',
+            aboutPoint2: 'Report waste by tagging locations on an interactive map.',
+            aboutPoint3: 'All reports are sent to municipal authorities for action.',
+            aboutPoint4: 'Join us in making your city cleaner and greener!',
+            contactHeadline: 'Contact Us',
+            contactBody: 'Have questions, feedback, or need support? Reach out to the EcoHive team and we’ll be happy to help!',
+            contactEmail: 'Email',
+            contactPhone: 'Phone',
+            contactAddress: 'Address'
         },
         my: {
             home: 'ပင်မစာမျက်နှာ',
@@ -103,6 +114,17 @@ export const AppContextProvider = (props) => {
             reportBannerSubtitle: 'ခွင့်ပြုထားသော မြေပုံမှတစ်ဆင့် သင်၏ နေရာဒေသရှိ အလွန်များသည့် အမှိုက်ကို တိုင်ပြပါ',
             report: 'တိုင်ပြမည်',
             footerAbout: 'Eco-Hive သည် တာရှည်တည်တံ့မှုကို လွယ်ကူ၍ အကျိုးပြုအောင် ဖန်တီးထားသော ဒီဂျစ်တယ် စျေးကွက်ဖြစ်ပါသည်။ လက်ဖန်တီး ပစ္စည်းများ၊ ပြန်လည်အသုံးပြုနိုင်သော အရင်းအမြစ်များကို တစ်နေရာထဲတွင် ဝယ်ရောင်းနိုင်ပြီး အမှိုက်ကို အသစ်ရဲ့ အသက်ပေးပါသည်။ မြို့ပေါ်တွင် တွေ့ရှိသော အမှိုက်မျိုးစုံကို ဓာတ်ပုံနှင့် တည်နေရာဖြင့် တိုင်ပေးနိုင်သဖြင့် မူပိုင်အာဏာရှိ ဝန်ထမ်းများ စနစ်တကျစုဆောင်း ပြန်လည်အသုံးပြုရာ မြန်ဆန်စေပါသည်။ လူထု၊ စီးပွားရေးလုပ်ငန်းများ နှင့် မြို့ပိုင် ဝန်ဆောင်မှုများကို ညှိနှိုင်းပေးကာ ကွန်ယက်စက်ဝိုင်း စီးပွားရေးနှင့် ပိုမို ထိရောက်သော မြို့ပြဘဝကို တိုးတက်စေပါသည်။'
+            ,aboutHeadline: 'ကျွန်ုပ်တို့အကြောင်း',
+            aboutBody: 'EcoHive သည် ဝယ်ယူရောင်းချသူများကို ချိတ်ဆက်ပေးနေရာမျိုးသာ မဟုတ်ဘဲ လူထုမှ အမှိုက်ပြဿနာများကို တိုက်ရိုက် မြို့ခံအာဏာပိုင်များထံ သတင်းပို့နိုင်စေသော ဖန်တီးဆန်းသစ်ထားသော ပလက်ဖောင်းဖြစ်ပါသည်။ မြေပုံပေါ်တွင် အမှိုက်နေရာများကို တိုင်ပြခြင်းဖြင့် ပတ်ဝန်းကျင်ပတ်သက်သည့် စိုးရိမ်အကြောင်းအရာများကို မူးဝွေ့ဖော်ထုတ်ကာ မြို့ကို ပိုမိုသန့်ရှင်းစေရာ အကူအညီပေးနိုင်ပါသည်။ ဝယ်ပါ၊ တိုင်ပြပါ၊ ကမ္ဘာအတွက် အကျိုးပြုပါ။',
+            aboutPoint1: 'ပစ္စည်းများကို လုံခြုံစိတ်ချစွာ ဝယ်ယူ ရောင်းချနိုင်သည်။',
+            aboutPoint2: 'အမှိုက်ကို အပြန်အလှန် အပြင်အဆင်မြေပုံပေါ်မှ တိုင်ပြနိုင်သည်။',
+            aboutPoint3: 'တိုင်ကြားချက်များအားလုံးကို မြို့ပါတ်ဝန်ထမ်းများသို့ ပေးပို့ပေးပါသည်။',
+            aboutPoint4: 'သင့်မြို့ကို ပိုအစိမ်းရောင် သန့်ရှင်းအောင် ကျွန်ုပ်တို့နှင့် ပူးပေါင်းပါ။',
+            contactHeadline: 'ဆက်သွယ်ရန်',
+            contactBody: 'မေးခွန်း၊ မှတ်ချက် သို့မဟုတ် ကူညီပံ့ပိုးမှု လိုအပ်ပါသလား? EcoHive အဖွဲ့ကို ဆက်သွယ်ပြီး ကူညီပေးပါမည်။',
+            contactEmail: 'အီးမေးလ်',
+            contactPhone: 'ဖုန်း',
+            contactAddress: 'လိပ်စာ'
         }
     }
 
