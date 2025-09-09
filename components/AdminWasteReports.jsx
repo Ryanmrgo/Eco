@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 const AdminWasteReports = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [confirming, setConfirming] = useState(null);
+  const [notification, setNotification] = useState("");
 
   useEffect(() => {
     fetch("/api/waste-report")
@@ -28,8 +30,24 @@ const AdminWasteReports = () => {
   if (loading) return <div>Loading waste reports...</div>;
   if (!reports.length) return <div>No waste reports found.</div>;
 
+  const handleConfirm = async (id) => {
+    setConfirming(id);
+    // Here you would call an API to mark as confirmed in DB, for now just UI feedback
+    setTimeout(() => {
+      setReports((prev) => prev.map(r => r._id === id ? { ...r, confirmed: true } : r));
+      setConfirming(null);
+      setNotification("Report confirmed successfully!");
+      setTimeout(() => setNotification(""), 2000);
+    }, 500);
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto mt-8">
+      {notification && (
+  <div className="fixed left-1/2 top-[150px] -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded shadow-lg z-50 animate-fade-in">
+          {notification}
+        </div>
+      )}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Admin: Waste Reports</h2>
         <button
@@ -58,7 +76,14 @@ const AdminWasteReports = () => {
               </td>
               <td className="border p-2">{r.locationName}</td>
               <td className="border p-2">{new Date(r.createdAt).toLocaleString()}</td>
-              <td className="border p-2">
+              <td className="border p-2 flex gap-2">
+                <button
+                  onClick={() => handleConfirm(r._id)}
+                  className={`bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 ${r.confirmed ? 'opacity-60 cursor-not-allowed' : ''}`}
+                  disabled={!!r.confirmed || confirming === r._id}
+                >
+                  {r.confirmed ? 'Confirmed' : confirming === r._id ? 'Confirming...' : 'Confirm'}
+                </button>
                 <button
                   onClick={() => handleDelete(r._id)}
                   className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
@@ -70,6 +95,7 @@ const AdminWasteReports = () => {
           ))}
         </tbody>
       </table>
+  {/* Removed unused selected modal code */}
     </div>
   );
 };

@@ -16,6 +16,11 @@ export default function Map({ onWasteReport }: MapProps) {
 
     const initMap = (center: { lng: number; lat: number }) => {
       try {
+        // Wait for maplibregl to be loaded
+        if (!(window as any).maplibregl) {
+          setTimeout(() => initMap(center), 100);
+          return;
+        }
         const map = new (window as any).maplibregl.Map({
           container: mapRef.current!,
           style: 'https://tiles.openfreemap.org/styles/liberty',

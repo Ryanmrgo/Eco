@@ -20,7 +20,15 @@ const Navbar = () => {
       <Link onClick={onClick} href="/about-us" className="nav-link">{t('aboutUs')}</Link>
       <Link onClick={onClick} href="/contact" className="nav-link">{t('contactUs')}</Link>
       <Link onClick={onClick} href="/report-waste" className="nav-link text-green-700 font-medium">{t('reportWaste')}</Link>
-      {user && <button onClick={() => { router.push('/seller'); onClick?.() }} className="pill-btn hidden sm:inline-flex">{t('sellerDashboard')}</button>}
+      {user && (
+        <>
+          <button onClick={() => { router.push('/seller'); onClick?.() }} className="pill-btn hidden sm:inline-flex">{t('sellerDashboard')}</button>
+          {user.isAdmin && <>
+            <Link onClick={onClick} href="/admin/waste-reports" className="pill-btn hidden sm:inline-flex ml-2">Waste Reports</Link>
+            <Link onClick={onClick} href="/admin" className="pill-btn hidden sm:inline-flex ml-2">Admin</Link>
+          </>}
+        </>
+      )}
       <button onClick={() => { toggleLanguage(); onClick?.() }} className="pill-btn border-gray-300">{lang === 'en' ? 'မြန်မာ' : 'English'}</button>
     </>
   )
