@@ -5,6 +5,6 @@ import React from "react";
 
 export default function ClientNavbarWrapper() {
   const pathname = usePathname();
-  if (pathname.startsWith("/seller")) return null;
+  if (pathname.startsWith("/seller") || pathname.startsWith("/admin")) return null;
   return <Navbar />;
 }
