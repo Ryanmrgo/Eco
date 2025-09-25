@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
 const mockProducts = [
   { id: 1, name: "Eco Water Bottle", seller: "Alice Smith", status: "pending" },
@@ -21,7 +22,9 @@ export default function ProductsPage() {
   const filtered = products.filter(p => p.status === tab);
 
   return (
-    <div className="p-8">
+    <div className="flex min-h-screen">
+      <AdminSidebar />
+      <div className="flex-1 p-8">
       <h1 className="text-2xl font-bold mb-4">Products Management</h1>
       <div className="flex gap-4 mb-6">
         <button className={`px-4 py-2 rounded ${tab === "pending" ? "bg-yellow-500 text-white" : "bg-gray-200"}`} onClick={() => setTab("pending")}>Pending Approval</button>
@@ -58,6 +61,7 @@ export default function ProductsPage() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
 const mockOrders = [
   { id: 1, user: "Alice Smith", product: "Eco Water Bottle", amount: 2, status: "delivered", date: "2025-09-20" },
@@ -12,7 +13,9 @@ export default function OrdersPage() {
   const [showDetails, setShowDetails] = useState(null);
 
   return (
-    <div className="p-8">
+    <div className="flex min-h-screen">
+      <AdminSidebar />
+      <div className="flex-1 p-8">
       <h1 className="text-2xl font-bold mb-4">Orders Management</h1>
       <table className="w-full border mb-6">
         <thead>
@@ -62,6 +65,7 @@ export default function OrdersPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
 const mockUsers = [
   { id: 1, name: "Alice Smith", email: "alice@email.com", status: "active" },
@@ -35,7 +36,9 @@ export default function UsersPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="flex min-h-screen">
+      <AdminSidebar />
+      <div className="flex-1 p-8">
       <h1 className="text-2xl font-bold mb-4">Users Management</h1>
       <div className="flex items-center gap-4 mb-4">
         <input
@@ -118,6 +121,7 @@ export default function UsersPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }
