@@ -1,3 +1,7 @@
+
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import AdminHeader from '../../../components/admin/AdminHeader';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 import StatsOverview from '../../../components/admin/StatsOverview';
@@ -6,6 +10,12 @@ import RecentWasteReports from '../../../components/admin/RecentWasteReports';
 import UserOverview from '../../../components/admin/UserOverview';
 
 export default function AdminDashboard() {
+	const router = useRouter();
+	useEffect(() => {
+		if (typeof window !== "undefined" && !localStorage.getItem("admin-auth")) {
+			router.replace("/admin/login");
+		}
+	}, [router]);
 	return (
 		<div className="flex min-h-screen bg-gray-50">
 			<AdminSidebar />

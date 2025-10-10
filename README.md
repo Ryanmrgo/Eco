@@ -20,7 +20,26 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+
+## Audit Log System (Admin & User Activity)
+
+This project implements a unified audit logging system for both admin and user activities, designed for traceability and transparency. 
+
+- **Admin Audit Logs** are stored in localStorage under the key `audit-logs` and are viewable at `/admin/audit-logs`.
+- **User Audit Logs** are stored in localStorage under the key `user-audit-logs` and are viewable at `/admin/user-audit-logs`.
+- Both logs use a similar structure: each entry includes `action`, `actor`, `target`, `timestamp`, `ip`, `status`, and `eventType`.
+- The UI for each log features a table with a slider (in the table header) to control the number of rows displayed.
+- Navigation links allow switching between admin and user audit logs.
+
+**How to distinguish/filter actions:**
+- Admin and user logs are kept in separate tables and storage keys for clarity and performance.
+- Each log entry can be filtered by action, actor, date, and searched by keyword.
+- The log structure is extensible for future event types or roles.
+
+**Extending the system:**
+- To log a new user or admin action, push a new entry to the appropriate localStorage key with the required fields.
+- For user activity logging, use the provided helper in user-facing pages (login, profile update, order, report waste, etc).
+
 
 To learn more about Next.js, take a look at the following resources:
 
