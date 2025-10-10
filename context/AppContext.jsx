@@ -252,11 +252,12 @@ export const AppContextProvider = (props) => {
         fetchProductData()
     }, [])
 
+
     useEffect(() => {
         if (user) {
-            fetchUserData()
+            fetchUserData();
         }
-    }, [user])
+    }, [user]);
 
     const value = {
         user, getToken,
