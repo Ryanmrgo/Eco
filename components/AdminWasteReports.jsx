@@ -4,6 +4,7 @@ const AdminWasteReports = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [confirming, setConfirming] = useState(null);
+  const [deleting, setDeleting] = useState(null);
   const [notification, setNotification] = useState("");
 
   useEffect(() => {
@@ -21,10 +22,22 @@ const AdminWasteReports = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this report?")) return;
-    const res = await fetch(`/api/waste-report/${id}`, { method: "DELETE" });
-    if (res.ok) {
-      setReports((prev) => prev.filter((r) => r._id !== id));
+    setDeleting(id);
+    try {
+      const res = await fetch(`/api/waste-report/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setReports((prev) => prev.filter((r) => r._id !== id));
+        setNotification("Report deleted successfully!");
+        setTimeout(() => setNotification(""), 2000);
+      } else {
+        setNotification("Failed to delete report.");
+        setTimeout(() => setNotification(""), 2000);
+      }
+    } catch (err) {
+      setNotification("Error deleting report.");
+      setTimeout(() => setNotification(""), 2000);
     }
+    setDeleting(null);
   };
 
   if (loading) return <div>Loading waste reports...</div>;
@@ -32,13 +45,22 @@ const AdminWasteReports = () => {
 
   const handleConfirm = async (id) => {
     setConfirming(id);
-    // Here you would call an API to mark as confirmed in DB, for now just UI feedback
-    setTimeout(() => {
-      setReports((prev) => prev.map(r => r._id === id ? { ...r, confirmed: true } : r));
-      setConfirming(null);
-      setNotification("Report confirmed successfully!");
+    try {
+      const res = await fetch(`/api/waste-report/${id}`, { method: "PATCH" });
+      const data = await res.json();
+      if (data.success) {
+        setReports((prev) => prev.map(r => r._id === id ? { ...r, confirmed: true } : r));
+        setNotification("Report confirmed successfully!");
+        setTimeout(() => setNotification(""), 2000);
+      } else {
+        setNotification("Failed to confirm report.");
+        setTimeout(() => setNotification(""), 2000);
+      }
+    } catch (err) {
+      setNotification("Error confirming report.");
       setTimeout(() => setNotification(""), 2000);
-    }, 500);
+    }
+    setConfirming(null);
   };
 
   return (
@@ -86,9 +108,10 @@ const AdminWasteReports = () => {
                 </button>
                 <button
                   onClick={() => handleDelete(r._id)}
-                  className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                  className={`bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 ${deleting === r._id ? 'opacity-60 cursor-not-allowed' : ''}`}
+                  disabled={deleting === r._id}
                 >
-                  Delete
+                  {deleting === r._id ? 'Deleting...' : 'Delete'}
                 </button>
               </td>
             </tr>

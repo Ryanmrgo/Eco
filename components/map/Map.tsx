@@ -28,6 +28,20 @@ export default function Map({ onWasteReport }: MapProps) {
           zoom: 12,
         });
 
+        // Expose map instance so other components (markers) can find it
+        try {
+          // store on the DOM element
+          (mapRef.current as any).__map__ = map;
+          // convenience global
+          (window as any).mapInstance = map;
+          // store on maplibregl namespace for compatibility with detection heuristics
+          if ((window as any).maplibregl) {
+            (window as any).maplibregl._lastMapInstance = map;
+          }
+        } catch (e) {
+          // ignore
+        }
+
         map.on('error', (e: any) => {
           // Log maplibre errors
           console.error('MapLibre error:', e && e.error ? e.error : e);
@@ -39,6 +53,8 @@ export default function Map({ onWasteReport }: MapProps) {
         const marker = new (window as any).maplibregl.Marker({ draggable: false })
           .setLngLat([center.lng, center.lat])
           .addTo(map);
+
+  // (No hover popup for the located marker by design)
 
         // Show coordinates under cursor
         let coordDiv = document.getElementById('map-coords');
@@ -99,6 +115,8 @@ export default function Map({ onWasteReport }: MapProps) {
             `);
           marker.setPopup(popup);
           marker.togglePopup();
+
+          // do not attach hover popup for the located marker
 
           // Add a click event for the button (delegated)
           setTimeout(() => {

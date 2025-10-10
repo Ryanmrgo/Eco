@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const WasteReportForm = ({ locationName, onSubmit }) => {
+const WasteReportForm = ({ locationName, onSubmit, lng, lat }) => {
   const [photo, setPhoto] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -27,6 +27,10 @@ const WasteReportForm = ({ locationName, onSubmit }) => {
       const formData = new FormData();
       formData.append("locationName", locationName);
       formData.append("photo", photo);
+      if (lng !== undefined && lat !== undefined) {
+        formData.append("lng", lng);
+        formData.append("lat", lat);
+      }
       const res = await fetch("/api/waste-report", {
         method: "POST",
         body: formData,
