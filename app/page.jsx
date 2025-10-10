@@ -7,9 +7,11 @@ import NewsLetter from "@/components/NewsLetter";
 import FeaturedProduct from "@/components/FeaturedProduct";
 import Footer from "@/components/Footer";
 
+import SignInRedirectWrapper from "@/components/SignInRedirectWrapper";
+
 const Home = () => {
   return (
-    <>
+    <SignInRedirectWrapper>
       <div className="px-6 md:px-16 lg:px-32">
         <HeaderSlider />
         <HomeProducts />
@@ -18,7 +20,7 @@ const Home = () => {
         <NewsLetter />
       </div>
       <Footer />
-    </>
+    </SignInRedirectWrapper>
   );
 };
 
