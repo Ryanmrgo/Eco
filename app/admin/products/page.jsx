@@ -88,7 +88,8 @@ export default function ProductsPage() {
     }
   }
 
-  const filtered = tab === 'all' ? products : products.filter(p => p.status === tab);
+  // In the 'all' tab, show only non-approved products
+  const filtered = tab === 'all' ? products.filter(p => p.status !== 'approved') : products.filter(p => p.status === tab);
 
   return (
     <div className="flex min-h-screen">

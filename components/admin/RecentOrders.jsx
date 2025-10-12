@@ -44,7 +44,7 @@ const RecentOrders = () => {
             <tr key={order._id} className="border-t">
               <td className="py-2">{order.userEmail || 'N/A'}</td>
               <td className="py-2">{order.items ? order.items.map(i => i.product?.name || 'Product').join(', ') : 'N/A'}</td>
-              <td className="py-2">{order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'N/A'}</td>
+              <td className="py-2">{order.date ? new Date(order.date).toLocaleDateString() : 'N/A'}</td>
               <td className="py-2">
                 <span className={`px-2 py-1 rounded text-xs ${order.status === 'Delivered' ? 'bg-green-200 text-green-800' : 'bg-yellow-200 text-yellow-800'}`}>{order.status || 'Pending'}</span>
               </td>

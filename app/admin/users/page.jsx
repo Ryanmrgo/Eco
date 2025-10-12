@@ -51,10 +51,26 @@ export default function UsersPage() {
     // TODO: Connect to API to delete user
     setUsers(users.filter(u => u._id !== id));
   }
-  function handleBlock(id) {
-    // TODO: Connect to API to block/unblock user
-    setUsers(users.map(u => u._id === id ? { ...u, status: u.status === "active" ? "blocked" : "active" } : u));
-  }
+  async function handleBlock(id) {
+      const user = users.find(u => u._id === id);
+      if (!user) return;
+      const newStatus = user.status === "active" ? "blocked" : "active";
+      try {
+        const res = await fetch('/api/user/status', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: id, status: newStatus })
+        });
+        const data = await res.json();
+        if (data.success) {
+          setUsers(users.map(u => u._id === id ? { ...u, status: newStatus } : u));
+        } else {
+          alert(data.message || 'Failed to update user status');
+        }
+      } catch (err) {
+        alert('Failed to update user status');
+      }
+    }
 
   return (
     <div className="flex min-h-screen">

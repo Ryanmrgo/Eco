@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     imageUrl: { type: String, required: true },
     cartItems: { type: Object, default: {} },
     isAdmin: { type: Boolean, default: false },
-    role: { type: String, default: 'buyer' }
+    role: { type: String, default: 'buyer' },
+    status: { type: String, enum: ['active', 'blocked'], default: 'active' }
 }, { minimize: false })
 
 const User = mongoose.models.user || mongoose.model('user',userSchema)

@@ -61,7 +61,7 @@ export default function OrdersPage() {
               <td className="p-2">
                 <span className={o.status === "Delivered" ? "text-green-600" : o.status === "Shipped" ? "text-blue-600" : "text-yellow-600"}>{o.status || 'Pending'}</span>
               </td>
-              <td className="p-2">{o.createdAt ? new Date(o.createdAt).toLocaleDateString() : 'N/A'}</td>
+              <td className="p-2">{o.date ? new Date(o.date).toLocaleDateString() : 'N/A'}</td>
               <td className="p-2">
                 <button className="text-blue-600" onClick={() => setShowDetails(o)}>View</button>
               </td>
@@ -80,7 +80,7 @@ export default function OrdersPage() {
             <div className="mb-2"><b>Product(s):</b> {showDetails.items ? showDetails.items.map(i => i.product?.name || 'Product').join(', ') : 'N/A'}</div>
             <div className="mb-2"><b>Amount:</b> {showDetails.items ? showDetails.items.reduce((sum, i) => sum + (i.quantity || 1), 0) : 'N/A'}</div>
             <div className="mb-2"><b>Status:</b> <span className={showDetails.status === "Delivered" ? "text-green-600" : showDetails.status === "Shipped" ? "text-blue-600" : "text-yellow-600"}>{showDetails.status || 'Pending'}</span></div>
-            <div className="mb-4"><b>Date:</b> {showDetails.createdAt ? new Date(showDetails.createdAt).toLocaleDateString() : 'N/A'}</div>
+            <div className="mb-4"><b>Date:</b> {showDetails.date ? new Date(showDetails.date).toLocaleDateString() : 'N/A'}</div>
             <div className="flex gap-2 justify-end">
               <button className="px-3 py-1" onClick={() => setShowDetails(null)}>Close</button>
             </div>
