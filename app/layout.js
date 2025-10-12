@@ -3,6 +3,7 @@ import "./globals.css";
 import { AppContextProvider } from "@/context/AppContext";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
+import { cookies } from "next/headers";
 
 
 import ClientNavbarWrapper from "@/components/ClientNavbarWrapper";
@@ -15,12 +16,14 @@ export const metadata = {
   description: "E-Commerce with Next.js ",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
+  const initialLang = cookieStore.get('eco-lang')?.value === 'my' ? 'my' : 'en';
   return (
     <ClerkProvider>
       <html lang="en">
         <body className={`${outfit.className} antialiased text-gray-700`} >
-          <AppContextProvider>
+          <AppContextProvider initialLang={initialLang}>
             <Toaster />
             <ClientNavbarWrapper />
             {children}

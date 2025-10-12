@@ -23,8 +23,8 @@ export const AppContextProvider = (props) => {
     const [userData, setUserData] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
     const [cartItems, setCartItems] = useState({})
-    // i18n language state (en | my)
-    const [lang, setLang] = useState('en')
+    // i18n language state (en | my) initialized from server-provided cookie via props
+    const [lang, setLang] = useState(props.initialLang === 'my' ? 'my' : 'en')
 
     // Centralized translation strings. Add keys as needed.
     const translations = {
@@ -130,13 +130,19 @@ export const AppContextProvider = (props) => {
 
     const t = (key) => translations[lang]?.[key] || translations.en[key] || key
 
-    const toggleLanguage = () => setLang(prev => prev === 'en' ? 'my' : 'en')
+    const toggleLanguage = () => {
+        setLang(prev => {
+            const next = prev === 'en' ? 'my' : 'en'
+            if (typeof document !== 'undefined') {
+                // persist in cookie for SSR and in localStorage for client
+                document.cookie = `eco-lang=${next}; max-age=31536000; path=/`
+                try { localStorage.setItem('eco-lang', next) } catch {}
+            }
+            return next
+        })
+    }
 
-    // persist language preference
-    useEffect(() => {
-        const stored = typeof window !== 'undefined' ? localStorage.getItem('eco-lang') : null;
-        if (stored && (stored === 'en' || stored === 'my')) setLang(stored);
-    }, [])
+    // persist language preference (client-side only)
     useEffect(() => {
         if (typeof window !== 'undefined') localStorage.setItem('eco-lang', lang)
     }, [lang])

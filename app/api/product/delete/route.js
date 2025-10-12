@@ -1,20 +1,37 @@
-import dbConnect from '@/config/db';
+import connectDB from '@/config/db';
 import Product from '@/models/Product';
+import User from '@/models/User';
+import { getAuth } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
 export async function DELETE(request) {
   try {
-    await dbConnect();
+    const { userId } = getAuth(request)
+
+    // dev-only bypass header
+    const isDevBypass = process.env.NODE_ENV === 'development' && request.headers.get('x-dev-admin') === '1'
+
+    if (!userId && !isDevBypass) return NextResponse.json({ success: false, message: 'Not authenticated' }, { status: 401 })
+
+    await connectDB();
+
+    if (!isDevBypass) {
+      const user = await User.findById(userId)
+      if (!user || !user.isAdmin) return NextResponse.json({ success: false, message: 'Not authorized' }, { status: 403 })
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     if (!id) {
-      return new Response(JSON.stringify({ error: 'Product ID is required' }), { status: 400 });
+      return NextResponse.json({ success: false, message: 'Product ID is required' }, { status: 400 })
     }
     const deleted = await Product.findByIdAndDelete(id);
     if (!deleted) {
-      return new Response(JSON.stringify({ error: 'Product not found' }), { status: 404 });
+      return NextResponse.json({ success: false, message: 'Product not found' }, { status: 404 })
     }
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    console.error('Error deleting product:', error)
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 })
   }
 }

@@ -6,8 +6,11 @@ export async function GET(request) {
     try {
 
         await connectDB()
+        const { searchParams } = new URL(request.url)
+        const includeUnapproved = searchParams.get('includeUnapproved') === 'true'
 
-        const products = await Product.find({})
+        const filter = includeUnapproved ? {} : { approved: true }
+        const products = await Product.find(filter)
         return NextResponse.json({ success:true, products })
 
     } catch (error) {

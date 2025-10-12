@@ -13,9 +13,12 @@ export async function GET(request) {
         
         const { userId } = getAuth(request)
 
+        console.log("User id = ", userId)
+
         const isSeller = await authSeller(userId)
 
         if (!isSeller) {
+            console.error('order/seller-orders - not authorized', { userId, isSeller })
             return NextResponse.json({ success: false, message: 'not authorized' })
         }
 
