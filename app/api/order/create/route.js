@@ -78,9 +78,12 @@ export async function POST(request) {
         });
 
 
-    // clear user cart
-    user.cartItems = {}
-    await user.save()
+        // clear user cart
+        const user = await User.findById(userId);
+        if (user) {
+            user.cartItems = {};
+            await user.save();
+        }
 
         return NextResponse.json({ success: true, message: 'Order Placed' })
 
