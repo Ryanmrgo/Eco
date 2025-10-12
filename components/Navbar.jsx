@@ -22,19 +22,19 @@ const Navbar = () => {
       <Link onClick={onClick} href="/report-waste" className="nav-link text-green-700 font-medium">{t('reportWaste')}</Link>
       {user && (
         <>
-          <button onClick={() => { router.push('/seller'); onClick?.() }} className="pill-btn hidden sm:inline-flex">{t('sellerDashboard')}</button>
+          <button onClick={() => { router.push('/seller'); onClick?.() }} className="pill-btn pill-accent hidden sm:inline-flex">{t('sellerDashboard')}</button>
           {user.isAdmin && <>
             <Link onClick={onClick} href="/admin/waste-reports" className="pill-btn hidden sm:inline-flex ml-2">Waste Reports</Link>
             <Link onClick={onClick} href="/admin" className="pill-btn hidden sm:inline-flex ml-2">Admin</Link>
           </>}
         </>
       )}
-      <button onClick={() => { toggleLanguage(); onClick?.() }} className="pill-btn border-gray-300">{lang === 'en' ? 'မြန်မာ' : 'English'}</button>
+      <button onClick={() => { toggleLanguage(); onClick?.() }} className="pill-btn pill-accent border-gray-300">{lang === 'en' ? 'မြန်မာ' : 'English'}</button>
     </>
   )
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 text-gray-700 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)]">
+    <nav suppressHydrationWarning className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 text-gray-700 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)]">
       <div className="flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-16 py-3">
         <div className="flex items-center gap-4">
           <button aria-label="Toggle menu" className="md:hidden p-2 rounded-md hover:bg-gray-100 active:scale-95 transition" onClick={() => setMobileOpen(o => !o)}>
@@ -113,15 +113,6 @@ const Navbar = () => {
           )}
         </div>
       )}
-
-      <style jsx global>{`
-        .nav-link { @apply relative px-1 hover:text-gray-900 transition; }
-        .nav-link::after { content:''; @apply absolute left-0 -bottom-1 h-0.5 w-0 bg-green-600 transition-all; }
-        .nav-link:hover::after { @apply w-full; }
-        .pill-btn { @apply text-xs border px-4 py-1.5 rounded-full hover:bg-gray-100 transition whitespace-nowrap; }
-        .animate-in.slide-in-from-top-2 { animation: slideDown .25s ease; }
-        @keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0);} }
-      `}</style>
     </nav>
   );
 };
