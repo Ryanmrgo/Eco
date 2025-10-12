@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const AddProduct = () => {
 
-  const { getToken } = useAppContext()
+  const { getToken, user } = useAppContext()
 
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
@@ -37,11 +37,10 @@ const AddProduct = () => {
     }
 
     try {
-
       const token = await getToken()
-
-      const { data } = await axios.post('/api/product/add',formData,{headers:{Authorization:`Bearer ${token}`}})
-
+      const { data } = await axios.post('/api/product/add', formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
       if (data.success) {
         toast.success(data.message)
         setFiles([]);
@@ -51,19 +50,42 @@ const AddProduct = () => {
         setPrice('');
         setOfferPrice('');
       } else {
-        toast.error(data.message);
+        toast.error('Upload failed: ' + (data.message || 'Unknown error'));
+        toast('Debug: ' + JSON.stringify(data), { icon: '🐞' })
       }
-
-      
     } catch (error) {
-      toast.error(error.message)
+      const msg = error?.response?.data?.message || error.message || 'Unknown error';
+      toast.error('Upload failed: ' + msg)
+      toast('Debug: ' + JSON.stringify(error?.response?.data || error), { icon: '🐞' })
     }
 
 
   };
 
+  async function promoteToSeller() {
+    try {
+      // use fetch with credentials to ensure Clerk session cookie is sent
+      const res = await fetch('/api/dev/make-seller', { method: 'POST', credentials: 'include' })
+      const data = await res.json()
+      if (data && data.success) {
+        toast.success('Promoted to seller (dev)')
+      } else {
+        toast.error(data?.message || 'Failed to promote')
+      }
+    } catch (err) {
+      toast.error(err?.message || 'Failed to promote')
+    }
+  }
+
   return (
     <div className="flex-1 min-h-screen flex flex-col justify-between">
+      {/* Debug: show current user role */}
+      <div className="p-2 text-sm text-gray-600 flex items-center gap-4">
+        <div>Current user role: <span className="font-mono">{user?.publicMetadata?.role || 'none'}</span></div>
+        {process.env.NODE_ENV === 'development' && (
+          <button onClick={promoteToSeller} className="px-3 py-1 bg-blue-200 rounded">Promote me to seller (dev)</button>
+        )}
+      </div>
       <form onSubmit={handleSubmit} className="md:p-10 p-4 space-y-5 max-w-lg">
         <div>
           <p className="text-base font-medium">Product Image</p>

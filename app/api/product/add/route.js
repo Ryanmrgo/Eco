@@ -22,6 +22,7 @@ export async function POST(request) {
         const isSeller = await authSeller(userId)
 
         if (!isSeller) {
+            console.error('product/add - not authorized', { userId, isSeller })
             return NextResponse.json({ success: false, message: 'not authorized' })
         }
 
@@ -74,7 +75,8 @@ export async function POST(request) {
             image,
             quantity: Number(formData.get('quantity')),
             productType,
-            date: Date.now()
+            date: Date.now(),
+            approved: false
         })
 
         return NextResponse.json({ success: true, message: 'Upload successful', newProduct })

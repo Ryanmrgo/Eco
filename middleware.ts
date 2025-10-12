@@ -10,5 +10,7 @@ export const config = {
     "/api/cart/:path*",
     "/api/order/:path*",
     "/api/user/:path*",
+    "/api/product/:path*",
+    "/api/dev/:path*",
   ],
 };

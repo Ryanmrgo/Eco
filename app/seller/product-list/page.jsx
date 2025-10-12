@@ -9,39 +9,38 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const ProductList = () => {
-
-  const { router, getToken, user } = useAppContext()
-
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { router, getToken, user } = useAppContext();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchSellerProduct = async () => {
     try {
-
-      const token = await getToken()
-
-      const { data } = await axios.get('/api/product/seller-list', { headers: { Authorization: `Bearer ${token}` } })
-
+      const token = await getToken();
+      const { data } = await axios.get('/api/product/seller-list', { headers: { Authorization: `Bearer ${token}` } });
       if (data.success) {
-        setProducts(data.products)
-        setLoading(false)
+        setProducts(data.products);
+        setLoading(false);
       } else {
-        toast.error(data.message)
+        toast.error('Product list fetch failed: ' + (data.message || 'Unknown error'));
+        toast('Debug: ' + JSON.stringify(data));
       }
-
     } catch (error) {
-      toast.error(error.message)
+      const msg = error?.response?.data?.message || error.message || 'Unknown error';
+      toast.error('Product list fetch failed: ' + msg);
+      toast('Debug: ' + JSON.stringify(error?.response?.data || error));
     }
-  }
+  };
 
   useEffect(() => {
     if (user) {
       fetchSellerProduct();
     }
-  }, [user])
+  }, [user]);
 
   return (
     <div className="flex-1 min-h-screen flex flex-col justify-between">
+      {/* Debug: show current user role */}
+      <div className="p-2 text-sm text-gray-600">Current user role: <span className="font-mono">{user?.publicMetadata?.role || 'none'}</span></div>
       {loading ? <Loading /> : <div className="w-full md:p-10 p-4">
         <h2 className="pb-4 text-lg font-medium">All Product</h2>
         <div className="flex flex-col items-center max-w-4xl w-full overflow-hidden rounded-md bg-white border border-gray-500/20">
