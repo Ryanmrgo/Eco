@@ -45,8 +45,6 @@ const Orders = () => {
 
     return (
         <div className="flex-1 h-screen overflow-scroll flex flex-col justify-between text-sm">
-            {/* Debug: show current user role */}
-            <div className="p-2 text-sm text-gray-600">Current user role: <span className="font-mono">{user?.publicMetadata?.role || 'none'}</span></div>
             {loading ? <Loading /> : (
                 <div className="md:p-10 p-4 space-y-5">
                     <h2 className="text-lg font-medium">Orders</h2>
