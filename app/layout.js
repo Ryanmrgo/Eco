@@ -20,8 +20,8 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body className={`${outfit.className} antialiased text-gray-700`} >
-          <Toaster />
           <AppContextProvider>
+            <Toaster />
             <ClientNavbarWrapper />
             {children}
           </AppContextProvider>

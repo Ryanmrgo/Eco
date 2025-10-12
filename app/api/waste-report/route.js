@@ -9,6 +9,8 @@ export async function POST(req) {
   const formData = await req.formData();
   const locationName = formData.get("locationName");
   const photo = formData.get("photo");
+  const lng = formData.get("lng");
+  const lat = formData.get("lat");
 
 
   // Upload photo to Cloudinary and save only the URL
@@ -33,6 +35,8 @@ export async function POST(req) {
   const report = await WasteReport.create({
     locationName,
     photoUrl,
+    lng: lng ? Number(lng) : undefined,
+    lat: lat ? Number(lat) : undefined,
   });
 
   return NextResponse.json({ success: true, report });
@@ -41,5 +45,7 @@ export async function POST(req) {
 export async function GET() {
   await connectDB();
   const reports = await WasteReport.find().sort({ createdAt: -1 });
+  // Debug log: print all reports and their confirmed status
+  console.log("[DEBUG] Waste reports:", reports.map(r => ({ id: r._id, confirmed: r.confirmed, locationName: r.locationName })));
   return NextResponse.json({ reports });
 }
