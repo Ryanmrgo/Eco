@@ -10,7 +10,8 @@ export default function Map({ onWasteReport }: MapProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!mapRef.current) return;
+
+  if (!mapRef.current || !(mapRef.current instanceof HTMLElement)) return;
 
     const fallbackCoords = { lng: 96.09190782286511, lat: 21.937942995500503 };
 

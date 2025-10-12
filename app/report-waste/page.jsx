@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 import WasteReportForm from "@/components/WasteReportForm";
 import WasteReportList from "@/components/WasteReportList";
@@ -8,10 +10,16 @@ import WasteReportList from "@/components/WasteReportList";
 const Map = dynamic(() => import("@/components/map/Map"), { ssr: false });
 
 const ReportWaste = () => {
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const { isSignedIn } = useUser();
 
   const handleWasteReport = (location) => {
+    if (!isSignedIn) {
+      toast.error("You must sign in to use this function.");
+      return;
+    }
     setSelectedLocation(location);
     setModalOpen(true);
   };
