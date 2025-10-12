@@ -89,6 +89,7 @@ export default function ProductsPage() {
   }
 
   const filtered = tab === 'all' ? products : products.filter(p => p.status === tab);
+  const showActions = tab !== 'approved';
 
   return (
     <div className="flex min-h-screen">
@@ -124,12 +125,12 @@ export default function ProductsPage() {
               <th className="p-2">Price</th>
               <th className="p-2">Date</th>
               <th className="p-2">Status</th>
-              <th className="p-2">Actions</th>
+              {showActions && <th className="p-2">Actions</th>}
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 && (
-              <tr><td colSpan={6} className="text-center p-4">No products found.</td></tr>
+              <tr><td colSpan={showActions ? 6 : 5} className="text-center p-4">No products found.</td></tr>
             )}
             {filtered.map(p => (
               <tr key={p.id} className="border-t">
@@ -145,16 +146,18 @@ export default function ProductsPage() {
                 <td className="p-2 text-center">
                   <span className={`px-2 py-1 rounded-full text-sm ${p.status === 'approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-800'}`}>{p.status}</span>
                 </td>
-                <td className="p-2 text-center">
-                  {p.status === 'pending' ? (
-                    <div className="flex justify-center gap-2">
-                      <button disabled={busyId === p.id} className={`px-3 py-1 rounded ${busyId === p.id ? 'bg-gray-300' : 'bg-green-600 text-white'}`} onClick={() => handleApprove(p.id)}>{busyId === p.id ? 'Working...' : 'Approve'}</button>
-                      <button disabled={busyId === p.id} className={`px-3 py-1 rounded ${busyId === p.id ? 'bg-gray-300' : 'bg-red-600 text-white'}`} onClick={() => handleReject(p.id)}>{busyId === p.id ? 'Working...' : 'Delete'}</button>
-                    </div>
-                  ) : (
-                    <span className="text-gray-500">No actions</span>
-                  )}
-                </td>
+                {showActions && (
+                  <td className="p-2 text-center">
+                    {p.status === 'pending' ? (
+                      <div className="flex justify-center gap-2">
+                        <button disabled={busyId === p.id} className={`px-3 py-1 rounded ${busyId === p.id ? 'bg-gray-300' : 'bg-green-600 text-white'}`} onClick={() => handleApprove(p.id)}>{busyId === p.id ? 'Working...' : 'Approve'}</button>
+                        <button disabled={busyId === p.id} className={`px-3 py-1 rounded ${busyId === p.id ? 'bg-gray-300' : 'bg-red-600 text-white'}`} onClick={() => handleReject(p.id)}>{busyId === p.id ? 'Working...' : 'Delete'}</button>
+                      </div>
+                    ) : (
+                      <span className="text-gray-500">No actions</span>
+                    )}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
