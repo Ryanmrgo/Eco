@@ -24,20 +24,20 @@ export async function POST(request) {
 
 
         // Ensure user exists in DB with email
-        let user = await User.findById(userId);
-        if (!user) {
-            user = new User({
+        // Always upsert user with latest info before placing order
+        await User.findByIdAndUpdate(
+            userId,
+            {
                 _id: userId,
                 name: userData?.firstName && userData?.lastName 
                     ? `${userData.firstName} ${userData.lastName}` 
                     : userData?.username || 'Unknown User',
                 email: userData?.emailAddresses?.[0]?.emailAddress || '',
                 imageUrl: userData?.imageUrl || '',
-                createdAt: new Date(),
-                updatedAt: new Date()
-            });
-            await user.save();
-        }
+                updatedAt: new Date(),
+            },
+            { upsert: true, new: true, setDefaultsOnInsert: true }
+        );
 
         // calculate amount and update product quantity atomically
         let totalAmount = 0;

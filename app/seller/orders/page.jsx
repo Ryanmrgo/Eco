@@ -74,6 +74,8 @@ const Orders = () => {
                                     <span>{order.address ? `${order.address.city || ""}, ${order.address.state || ""}` : "No Address"}</span>
                                     <br />
                                     <span>{order.address?.phoneNumber || "No Phone"}</span>
+                                    <br />
+                                    <span className="text-xs text-gray-600">Buyer: {order.buyerEmail || 'Unknown'}</span>
                                 </p>
                             </div>
                             <p className="font-medium my-auto">{currency}{order.amount}</p>

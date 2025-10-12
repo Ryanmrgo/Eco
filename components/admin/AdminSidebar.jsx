@@ -10,7 +10,6 @@ const AdminSidebar = () => {
         <a href="/admin/users" className="py-2 px-4 rounded hover:bg-gray-700 hover:text-green-400 transition">Users</a>
         <a href="/admin/products" className="py-2 px-4 rounded hover:bg-gray-700 hover:text-green-400 transition">Products</a>
         <a href="/admin/orders" className="py-2 px-4 rounded hover:bg-gray-700 hover:text-green-400 transition">Orders</a>
-        <a href="/admin/settings" className="py-2 px-4 rounded hover:bg-gray-700 hover:text-green-400 transition">Settings</a>
       </nav>
       <div className="mt-8 flex justify-center">
         <img src="/assets/logo.png" alt="Eco Hive Logo" className="h-12 w-auto" />

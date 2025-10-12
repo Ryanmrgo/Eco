@@ -12,7 +12,7 @@ export async function GET(request) {
         await Product.length;
 
         // Get all orders
-        let orders = await Order.find({}).populate('address items.product');
+    let orders = await Order.find({}).sort({ date: -1 }).populate('address items.product');
 
         // Attach user email to each order
         const userIds = [...new Set(orders.map(o => o.userId))];
