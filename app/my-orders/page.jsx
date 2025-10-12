@@ -20,7 +20,7 @@ const MyOrders = () => {
             
             const token = await getToken()
 
-            const {data} = await axios.get('/api/order/list', {headers:{Authorization:`Bearer ${token}`}})
+            const {data} = await axios.get('/api/order/my-orders', {headers:{Authorization:`Bearer ${token}`}})
 
             if (data.success) {
                 setOrders(data.orders.reverse())

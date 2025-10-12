@@ -1,7 +1,10 @@
+
+
 import { inngest } from "@/config/inngest";
 import Product from "@/models/Product";
 import User from "@/models/User";
-import { getAuth } from "@clerk/nextjs/server";
+import Order from "@/models/Order";
+import { getAuth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 
@@ -9,13 +12,32 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
     try {
 
-        const { userId } = getAuth(request)
-        const { address, items } = await request.json();
+
+    const { userId } = getAuth(request);
+    const userData = await currentUser(request);
+    const { address, items } = await request.json();
 
         if (!address || items.length === 0) {
             return NextResponse.json({ success: false, message: 'Invalid data' });
         }
 
+
+
+        // Ensure user exists in DB with email
+        let user = await User.findById(userId);
+        if (!user) {
+            user = new User({
+                _id: userId,
+                name: userData?.firstName && userData?.lastName 
+                    ? `${userData.firstName} ${userData.lastName}` 
+                    : userData?.username || 'Unknown User',
+                email: userData?.emailAddresses?.[0]?.emailAddress || '',
+                imageUrl: userData?.imageUrl || '',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            });
+            await user.save();
+        }
 
         // calculate amount and update product quantity atomically
         let totalAmount = 0;
@@ -32,6 +54,18 @@ export async function POST(request) {
             await product.save();
         }
 
+
+        // Save the order to the database
+        const order = new Order({
+            userId,
+            address,
+            items,
+            amount: totalAmount + Math.floor(totalAmount * 0.02),
+            status: 'Order Placed',
+            date: Date.now()
+        });
+        await order.save();
+
         await inngest.send({
             name: 'order/created',
             data: {
@@ -41,12 +75,12 @@ export async function POST(request) {
                 amount: totalAmount + Math.floor(totalAmount * 0.02),
                 date: Date.now()
             }
-        })
+        });
 
-        // clear user cart
-        const user = await User.findById(userId)
-        user.cartItems = {}
-        await user.save()
+
+    // clear user cart
+    user.cartItems = {}
+    await user.save()
 
         return NextResponse.json({ success: true, message: 'Order Placed' })
 

@@ -2,37 +2,58 @@
 import { useState } from "react";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 
-const mockUsers = [
-  { id: 1, name: "Alice Smith", email: "alice@email.com", status: "active" },
-  { id: 2, name: "Bob Johnson", email: "bob@email.com", status: "blocked" },
-  { id: 3, name: "Charlie Lee", email: "charlie@email.com", status: "active" },
-];
+
+import { useEffect } from "react";
 
 export default function UsersPage() {
-  const [users, setUsers] = useState(mockUsers);
+  const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(null);
   const [showDetails, setShowDetails] = useState(null);
   const [form, setForm] = useState({ name: "", email: "" });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const filtered = users.filter(u => u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase()));
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch('/api/user/data/all');
+        const data = await res.json();
+        setUsers(data.users || []);
+      } catch (err) {
+        setError('Failed to load users');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchUsers();
+  }, []);
 
+  const filtered = users.filter(u => (u.name || '').toLowerCase().includes(search.toLowerCase()) || (u.email || '').toLowerCase().includes(search.toLowerCase()));
+
+  // The following handlers are still local only, you may want to connect them to your API for real CRUD
   function handleAdd() {
-    setUsers([...users, { id: Date.now(), name: form.name, email: form.email, status: "active" }]);
+    // TODO: Connect to API to add user
+    setUsers([...users, { _id: Date.now(), name: form.name, email: form.email, status: "active" }]);
     setForm({ name: "", email: "" });
     setShowAdd(false);
   }
   function handleEdit() {
-    setUsers(users.map(u => u.id === showEdit ? { ...u, ...form } : u));
+    // TODO: Connect to API to edit user
+    setUsers(users.map(u => u._id === showEdit ? { ...u, ...form } : u));
     setShowEdit(null);
     setForm({ name: "", email: "" });
   }
   function handleDelete(id) {
-    setUsers(users.filter(u => u.id !== id));
+    // TODO: Connect to API to delete user
+    setUsers(users.filter(u => u._id !== id));
   }
   function handleBlock(id) {
-    setUsers(users.map(u => u.id === id ? { ...u, status: u.status === "active" ? "blocked" : "active" } : u));
+    // TODO: Connect to API to block/unblock user
+    setUsers(users.map(u => u._id === id ? { ...u, status: u.status === "active" ? "blocked" : "active" } : u));
   }
 
   return (
@@ -59,18 +80,24 @@ export default function UsersPage() {
           </tr>
         </thead>
         <tbody>
-          {filtered.map(u => (
-            <tr key={u.id} className="border-t">
+          {loading ? (
+            <tr><td colSpan={4} className="text-center p-4">Loading users...</td></tr>
+          ) : error ? (
+            <tr><td colSpan={4} className="text-center text-red-600 p-4">{error}</td></tr>
+          ) : filtered.length === 0 ? (
+            <tr><td colSpan={4} className="text-center p-4">No users found.</td></tr>
+          ) : filtered.map(u => (
+            <tr key={u._id} className="border-t">
               <td className="p-2">{u.name}</td>
               <td className="p-2">{u.email}</td>
               <td className="p-2">
-                <span className={u.status === "active" ? "text-green-600" : "text-red-600"}>{u.status}</span>
+                <span className={u.status === "active" ? "text-green-600" : "text-red-600"}>{u.status || 'active'}</span>
               </td>
               <td className="p-2 flex gap-2">
                 <button className="text-blue-600" onClick={() => { setShowDetails(u); }}>View</button>
-                <button className="text-yellow-600" onClick={() => { setShowEdit(u.id); setForm({ name: u.name, email: u.email }); }}>Edit</button>
-                <button className="text-red-600" onClick={() => handleDelete(u.id)}>Delete</button>
-                <button className="text-gray-600" onClick={() => handleBlock(u.id)}>{u.status === "active" ? "Block" : "Unblock"}</button>
+                <button className="text-yellow-600" onClick={() => { setShowEdit(u._id); setForm({ name: u.name, email: u.email }); }}>Edit</button>
+                <button className="text-red-600" onClick={() => handleDelete(u._id)}>Delete</button>
+                <button className="text-gray-600" onClick={() => handleBlock(u._id)}>{u.status === "active" ? "Block" : "Unblock"}</button>
               </td>
             </tr>
           ))}

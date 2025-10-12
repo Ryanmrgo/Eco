@@ -92,8 +92,10 @@ const AdminWasteReports = () => {
           {reports.map((r) => (
             <tr key={r._id}>
               <td className="border p-2">
-                {r.photoUrl && (
-                  <img src={r.photoUrl} alt="Waste" className="w-16 h-16 object-cover rounded" />
+                {r.photoUrl ? (
+                  <img src={r.photoUrl} alt="Waste" style={{ width: 64, height: 64 }} className="object-cover rounded" />
+                ) : (
+                  <div style={{ width: 64, height: 64 }} className="bg-gray-200 flex items-center justify-center rounded text-xs text-gray-500">No Photo</div>
                 )}
               </td>
               <td className="border p-2">{r.locationName}</td>

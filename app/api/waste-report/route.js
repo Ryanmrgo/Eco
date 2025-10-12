@@ -12,24 +12,23 @@ export async function POST(req) {
   const lng = formData.get("lng");
   const lat = formData.get("lat");
 
+
   // Upload photo to Cloudinary and save only the URL
   let photoUrl = null;
   if (photo && typeof photo.arrayBuffer === "function") {
     const buffer = Buffer.from(await photo.arrayBuffer());
-    const uploadRes = await cloudinary.uploader.upload_stream({
-      folder: "waste-reports",
-      resource_type: "image",
-    }, async (error, result) => {
-      if (error) throw error;
-      photoUrl = result.secure_url;
-    });
-    // Use stream to upload
-    const stream = uploadRes;
-    stream.end(buffer);
-    // Wait for upload to finish
-    await new Promise((resolve, reject) => {
-      stream.on('finish', resolve);
-      stream.on('error', reject);
+    photoUrl = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: "waste-reports",
+          resource_type: "image",
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result.secure_url);
+        }
+      );
+      stream.end(buffer);
     });
   }
 
