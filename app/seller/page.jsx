@@ -79,13 +79,6 @@ const AddProduct = () => {
 
   return (
     <div className="flex-1 min-h-screen flex flex-col justify-between">
-      {/* Debug: show current user role */}
-      <div className="p-2 text-sm text-gray-600 flex items-center gap-4">
-        <div>Current user role: <span className="font-mono">{user?.publicMetadata?.role || 'none'}</span></div>
-        {process.env.NODE_ENV === 'development' && (
-          <button onClick={promoteToSeller} className="px-3 py-1 bg-blue-200 rounded">Promote me to seller (dev)</button>
-        )}
-      </div>
       <form onSubmit={handleSubmit} className="md:p-10 p-4 space-y-5 max-w-lg">
         <div>
           <p className="text-base font-medium">Product Image</p>

@@ -13,6 +13,8 @@ export async function GET(request) {
         
         const { userId } = getAuth(request)
 
+        console.log("User id = ", userId)
+
         const isSeller = await authSeller(userId)
 
         if (!isSeller) {
