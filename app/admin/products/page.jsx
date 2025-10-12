@@ -110,9 +110,7 @@ export default function ProductsPage() {
               </div>
               <div className="flex items-center gap-2">
               <button onClick={fetchProducts} className="px-3 py-1 bg-gray-200 rounded">Refresh</button>
-              {process.env.NODE_ENV === 'development' && (
-                <button onClick={promoteToSeller} className="px-3 py-1 bg-blue-200 rounded">Promote me to seller (dev)</button>
-              )}
+            
               {loading && <span className="text-sm text-gray-500">Loading...</span>}
               </div>
             </div>
