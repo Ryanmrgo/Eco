@@ -2,15 +2,31 @@
 import { useState } from "react";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 
-const mockOrders = [
-  { id: 1, user: "Alice Smith", product: "Eco Water Bottle", amount: 2, status: "delivered", date: "2025-09-20" },
-  { id: 2, user: "Bob Johnson", product: "Reusable Bag", amount: 1, status: "pending", date: "2025-09-22" },
-  { id: 3, user: "Charlie Lee", product: "Solar Charger", amount: 1, status: "shipped", date: "2025-09-23" },
-];
+
+import { useEffect } from "react";
 
 export default function OrdersPage() {
-  const [orders] = useState(mockOrders);
+  const [orders, setOrders] = useState([]);
   const [showDetails, setShowDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchOrders() {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch('/api/order/list');
+        const data = await res.json();
+        setOrders(data.orders || []);
+      } catch (err) {
+        setError('Failed to load orders');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchOrders();
+  }, []);
 
   return (
     <div className="flex min-h-screen">
@@ -21,7 +37,7 @@ export default function OrdersPage() {
         <thead>
           <tr className="bg-gray-100">
             <th className="p-2">Order ID</th>
-            <th className="p-2">User</th>
+            <th className="p-2">User Email</th>
             <th className="p-2">Product</th>
             <th className="p-2">Amount</th>
             <th className="p-2">Status</th>
@@ -30,16 +46,22 @@ export default function OrdersPage() {
           </tr>
         </thead>
         <tbody>
-          {orders.map(o => (
-            <tr key={o.id} className="border-t">
-              <td className="p-2">{o.id}</td>
-              <td className="p-2">{o.user}</td>
-              <td className="p-2">{o.product}</td>
-              <td className="p-2">{o.amount}</td>
+          {loading ? (
+            <tr><td colSpan={7} className="text-center p-4">Loading orders...</td></tr>
+          ) : error ? (
+            <tr><td colSpan={7} className="text-center text-red-600 p-4">{error}</td></tr>
+          ) : orders.length === 0 ? (
+            <tr><td colSpan={7} className="text-center p-4">No orders found.</td></tr>
+          ) : orders.map(o => (
+            <tr key={o._id} className="border-t">
+              <td className="p-2">{o._id}</td>
+              <td className="p-2">{o.userEmail || 'N/A'}</td>
+              <td className="p-2">{o.items ? o.items.map(i => i.product?.name || 'Product').join(', ') : 'N/A'}</td>
+              <td className="p-2">{o.items ? o.items.reduce((sum, i) => sum + (i.quantity || 1), 0) : 'N/A'}</td>
               <td className="p-2">
-                <span className={o.status === "delivered" ? "text-green-600" : o.status === "shipped" ? "text-blue-600" : "text-yellow-600"}>{o.status}</span>
+                <span className={o.status === "Delivered" ? "text-green-600" : o.status === "Shipped" ? "text-blue-600" : "text-yellow-600"}>{o.status || 'Pending'}</span>
               </td>
-              <td className="p-2">{o.date}</td>
+              <td className="p-2">{o.createdAt ? new Date(o.createdAt).toLocaleDateString() : 'N/A'}</td>
               <td className="p-2">
                 <button className="text-blue-600" onClick={() => setShowDetails(o)}>View</button>
               </td>
@@ -53,12 +75,12 @@ export default function OrdersPage() {
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-80">
             <h2 className="text-lg font-bold mb-4">Order Details</h2>
-            <div className="mb-2"><b>Order ID:</b> {showDetails.id}</div>
-            <div className="mb-2"><b>User:</b> {showDetails.user}</div>
-            <div className="mb-2"><b>Product:</b> {showDetails.product}</div>
-            <div className="mb-2"><b>Amount:</b> {showDetails.amount}</div>
-            <div className="mb-2"><b>Status:</b> <span className={showDetails.status === "delivered" ? "text-green-600" : showDetails.status === "shipped" ? "text-blue-600" : "text-yellow-600"}>{showDetails.status}</span></div>
-            <div className="mb-4"><b>Date:</b> {showDetails.date}</div>
+            <div className="mb-2"><b>Order ID:</b> {showDetails._id}</div>
+            <div className="mb-2"><b>User Email:</b> {showDetails.userEmail || 'N/A'}</div>
+            <div className="mb-2"><b>Product(s):</b> {showDetails.items ? showDetails.items.map(i => i.product?.name || 'Product').join(', ') : 'N/A'}</div>
+            <div className="mb-2"><b>Amount:</b> {showDetails.items ? showDetails.items.reduce((sum, i) => sum + (i.quantity || 1), 0) : 'N/A'}</div>
+            <div className="mb-2"><b>Status:</b> <span className={showDetails.status === "Delivered" ? "text-green-600" : showDetails.status === "Shipped" ? "text-blue-600" : "text-yellow-600"}>{showDetails.status || 'Pending'}</span></div>
+            <div className="mb-4"><b>Date:</b> {showDetails.createdAt ? new Date(showDetails.createdAt).toLocaleDateString() : 'N/A'}</div>
             <div className="flex gap-2 justify-end">
               <button className="px-3 py-1" onClick={() => setShowDetails(null)}>Close</button>
             </div>

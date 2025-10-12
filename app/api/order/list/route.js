@@ -2,26 +2,30 @@ import connectDB from "@/config/db";
 import Address from "@/models/Address";
 import Order from "@/models/Order";
 import Product from "@/models/Product";
-import { getAuth } from "@clerk/nextjs/server";
+import User from "@/models/User";
 import { NextResponse } from "next/server";
-
-
 
 export async function GET(request) {
     try {
-        
-        const {userId} = getAuth(request)
+        await connectDB();
+        await Address.length;
+        await Product.length;
 
-        await connectDB()
+        // Get all orders
+        let orders = await Order.find({}).populate('address items.product');
 
-        await Address.length
-        await Product.length
+        // Attach user email to each order
+        const userIds = [...new Set(orders.map(o => o.userId))];
+        const users = await User.find({ _id: { $in: userIds } });
+        const userMap = {};
+        users.forEach(u => { userMap[u._id] = u.email; });
+        orders = orders.map(o => ({
+            ...o.toObject(),
+            userEmail: userMap[o.userId] || o.userId
+        }));
 
-        const orders = await Order.find({userId}).populate('address items.product')
-
-        return NextResponse.json({ success:true, orders })
-
+        return NextResponse.json({ success: true, orders });
     } catch (error) {
-        return NextResponse.json({ success:false, message:error.message })
+        return NextResponse.json({ success: false, message: error.message });
     }
 }

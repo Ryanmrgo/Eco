@@ -22,9 +22,17 @@ export async function GET(request) {
         await Address.length
         await Product.length
 
-        const orders = await Order.find({}).populate('address items.product')
 
-        return NextResponse.json({ success: true, orders })
+        // Find all products owned by this seller
+        const sellerProducts = await Product.find({ userId });
+        const sellerProductIds = sellerProducts.map(p => p._id.toString());
+
+        // Find all orders that include at least one product owned by this seller
+        const orders = await Order.find({
+            'items.product': { $in: sellerProductIds }
+        }).populate('address items.product');
+
+        return NextResponse.json({ success: true, orders });
 
     } catch (error) {
         return NextResponse.json({ success: false, message: error.message })
