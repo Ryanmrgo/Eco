@@ -10,7 +10,8 @@ import toast from "react-hot-toast";
 
 const MyOrders = () => {
 
-    const { currency, getToken, user, t } = useAppContext();
+    const { getToken, user, t } = useAppContext();
+    const currency = " MMK ";
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -76,7 +77,7 @@ const MyOrders = () => {
                                                 <span>{addr.phoneNumber || ''}</span>
                                             </p>
                                         </div>
-                                        <p className="font-medium my-auto">{currency}{order.amount}</p>
+                                        <p className="font-medium my-auto">{order.amount} MMK</p>
                                         <div>
                                             <p className="flex flex-col">
                                                 <span>Method : COD</span>
