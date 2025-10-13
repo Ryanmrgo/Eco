@@ -143,7 +143,7 @@ export default function ProductsPage() {
                   </div>
                 </td>
                 <td className="p-2 text-center">{p.seller}</td>
-                <td className="p-2 text-center">{(p.price/100).toFixed(2)}</td>
+                <td className="p-2 text-center">{typeof p.offerPrice === 'number' ? p.offerPrice.toFixed(2) : (typeof p.price === 'number' ? p.price.toFixed(2) : '0.00')} <span className="text-xs text-gray-500">MMK</span></td>
                 <td className="p-2 text-center">{p.date ? new Date(Number(p.date)).toLocaleString() : '-'}</td>
                 {showStatus && (
                   <td className="p-2 text-center">

@@ -40,8 +40,8 @@ export default function OrdersPage() {
             <th className="p-2">User Email</th>
             <th className="p-2">Product</th>
             <th className="p-2">Amount</th>
+            <th className="p-2">Order Value</th>
             <th className="p-2">Status</th>
-            <th className="p-2">Date</th>
             <th className="p-2">Actions</th>
           </tr>
         </thead>
@@ -58,10 +58,10 @@ export default function OrdersPage() {
               <td className="p-2">{o.userEmail || 'N/A'}</td>
               <td className="p-2">{o.items ? o.items.map(i => i.product?.name || 'Product').join(', ') : 'N/A'}</td>
               <td className="p-2">{o.items ? o.items.reduce((sum, i) => sum + (i.quantity || 1), 0) : 'N/A'}</td>
+              <td className="p-2">{typeof o.amount === 'number' ? o.amount.toFixed(2) : 'N/A'} <span className="text-xs text-gray-500">MMK</span></td>
               <td className="p-2">
                 <span className={o.status === "Delivered" ? "text-green-600" : o.status === "Shipped" ? "text-blue-600" : "text-yellow-600"}>{o.status || 'Pending'}</span>
               </td>
-              <td className="p-2">{o.createdAt ? new Date(o.createdAt).toLocaleDateString() : 'N/A'}</td>
               <td className="p-2">
                 <button className="text-blue-600" onClick={() => setShowDetails(o)}>View</button>
               </td>
@@ -79,8 +79,8 @@ export default function OrdersPage() {
             <div className="mb-2"><b>User Email:</b> {showDetails.userEmail || 'N/A'}</div>
             <div className="mb-2"><b>Product(s):</b> {showDetails.items ? showDetails.items.map(i => i.product?.name || 'Product').join(', ') : 'N/A'}</div>
             <div className="mb-2"><b>Amount:</b> {showDetails.items ? showDetails.items.reduce((sum, i) => sum + (i.quantity || 1), 0) : 'N/A'}</div>
+            <div className="mb-2"><b>Order Value:</b> {typeof showDetails.amount === 'number' ? showDetails.amount.toFixed(2) : 'N/A'} <span className="text-xs text-gray-500">MMK</span></div>
             <div className="mb-2"><b>Status:</b> <span className={showDetails.status === "Delivered" ? "text-green-600" : showDetails.status === "Shipped" ? "text-blue-600" : "text-yellow-600"}>{showDetails.status || 'Pending'}</span></div>
-            <div className="mb-4"><b>Date:</b> {showDetails.createdAt ? new Date(showDetails.createdAt).toLocaleDateString() : 'N/A'}</div>
             <div className="flex gap-2 justify-end">
               <button className="px-3 py-1" onClick={() => setShowDetails(null)}>Close</button>
             </div>
