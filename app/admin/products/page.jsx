@@ -90,7 +90,7 @@ export default function ProductsPage() {
 
   const filtered = tab === 'all' ? products : products.filter(p => p.status === tab);
   const showStatus = tab !== 'approved';
-  const showActions = tab !== 'approved';
+  const showActions = true; // Always show actions column
   const columnCount = 4 + (showStatus ? 1 : 0) + (showActions ? 1 : 0); // Product, Seller, Price, Date, [Status], [Actions]
 
   return (
@@ -152,14 +152,12 @@ export default function ProductsPage() {
                 )}
                 {showActions && (
                   <td className="p-2 text-center">
-                    {p.status === 'pending' ? (
-                      <div className="flex justify-center gap-2">
+                    <div className="flex justify-center gap-2">
+                      {p.status === 'pending' && (
                         <button disabled={busyId === p.id} className={`px-3 py-1 rounded ${busyId === p.id ? 'bg-gray-300' : 'bg-green-600 text-white'}`} onClick={() => handleApprove(p.id)}>{busyId === p.id ? 'Working...' : 'Approve'}</button>
-                        <button disabled={busyId === p.id} className={`px-3 py-1 rounded ${busyId === p.id ? 'bg-gray-300' : 'bg-red-600 text-white'}`} onClick={() => handleReject(p.id)}>{busyId === p.id ? 'Working...' : 'Delete'}</button>
-                      </div>
-                    ) : (
-                      <span className="text-gray-500">No actions</span>
-                    )}
+                      )}
+                      <button disabled={busyId === p.id} className={`px-3 py-1 rounded ${busyId === p.id ? 'bg-gray-300' : 'bg-red-600 text-white'}`} onClick={() => handleReject(p.id)}>{busyId === p.id ? 'Working...' : 'Delete'}</button>
+                    </div>
                   </td>
                 )}
               </tr>

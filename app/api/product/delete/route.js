@@ -15,9 +15,11 @@ export async function DELETE(request) {
 
     await connectDB();
 
+
+    let user = null;
     if (!isDevBypass) {
-      const user = await User.findById(userId)
-      if (!user || !user.isAdmin) return NextResponse.json({ success: false, message: 'Not authorized' }, { status: 403 })
+      user = await User.findById(userId);
+      if (!user) return NextResponse.json({ success: false, message: 'Not authorized' }, { status: 403 });
     }
 
     const { searchParams } = new URL(request.url);
@@ -25,11 +27,19 @@ export async function DELETE(request) {
     if (!id) {
       return NextResponse.json({ success: false, message: 'Product ID is required' }, { status: 400 })
     }
-    const deleted = await Product.findByIdAndDelete(id);
-    if (!deleted) {
-      return NextResponse.json({ success: false, message: 'Product not found' }, { status: 404 })
+    // Find the product first
+    const product = await Product.findById(id);
+    if (!product) {
+      return NextResponse.json({ success: false, message: 'Product not found' }, { status: 404 });
     }
-    return NextResponse.json({ success: true }, { status: 200 })
+
+    // Only allow delete if admin or seller owns the product
+    if (!isDevBypass && user && !user.isAdmin && product.userId !== userId) {
+      return NextResponse.json({ success: false, message: 'Not authorized to delete this product' }, { status: 403 });
+    }
+
+    await product.deleteOne();
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error('Error deleting product:', error)
     return NextResponse.json({ success: false, message: error.message }, { status: 500 })
