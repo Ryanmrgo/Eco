@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from "react";
-import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon } from "@/assets/assets";
+import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon, HeartIcon } from "@/assets/assets";
 import Link from "next/link"
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
@@ -66,6 +66,9 @@ const Navbar = () => {
               <UserButton.MenuItems>
                 <UserButton.Action label={t('myOrders')} labelIcon={<BagIcon />} onClick={() => router.push('/my-orders')} />
               </UserButton.MenuItems>
+              <UserButton.MenuItems>
+                <UserButton.Action label="Wishlist" labelIcon={<HeartIcon />} onClick={() => router.push('/wishlist')} />
+              </UserButton.MenuItems>
             </UserButton>
           ) : (
             <button onClick={openSignIn} className="flex items-center gap-2 hover:text-gray-900 transition text-sm font-medium">
@@ -91,6 +94,9 @@ const Navbar = () => {
               <UserButton.MenuItems>
                 <UserButton.Action label={t('myOrders')} labelIcon={<BagIcon />} onClick={() => router.push('/my-orders')} />
               </UserButton.MenuItems>
+              <UserButton.MenuItems>
+                <UserButton.Action label="Wishlist" labelIcon={<HeartIcon />} onClick={() => router.push('/wishlist')} />
+              </UserButton.MenuItems>
             </UserButton>
           ) : (
             <button onClick={openSignIn} className="flex items-center gap-2 hover:text-gray-900 transition">
@@ -109,6 +115,7 @@ const Navbar = () => {
             <div className="flex gap-2 pt-1">
               <button onClick={() => { router.push('/cart'); setMobileOpen(false) }} className="pill-btn flex-1">{t('cart')}</button>
               <button onClick={() => { router.push('/my-orders'); setMobileOpen(false) }} className="pill-btn flex-1">{t('myOrders')}</button>
+              <button onClick={() => { router.push('/wishlist'); setMobileOpen(false) }} className="pill-btn flex-1">Wishlist</button>
             </div>
           )}
         </div>
