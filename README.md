@@ -4,14 +4,14 @@ A Smart & Cute Way to Save the Planet
 
 ## 💡 Overview
 
-Eco Hive is a fun and eco-friendly platform designed to help people take care of the environment together. Just like a real beehive, everyone plays a role! 🐝✨
+Eco Hive is a fun and eco-friendly ecommerce platform designed to help people take care of the environment together. Just like a real beehive, everyone plays a role! 🐝✨
 
 The app encourages users to report waste, recycle properly, and earn rewards for helping keep the city clean. With a mix of smart technology and community power, Eco Hive makes sustainability simple, engaging, and rewarding.
 
 ## 🌎 What Makes Eco Hive Special?
 
 - 🌱 **Eco-Friendly Actions Made Easy**
-  Report trash, learn recycling tips, and make a real impact in your area.
+  Report trash, learn recycling tips,sell recycle items and make a real impact in your area.
 - 📍 **Smart Location Tracking**
   Easily mark where waste is found using maps for faster cleanup.
 - 🤖 **AI Assistant Buddy**
