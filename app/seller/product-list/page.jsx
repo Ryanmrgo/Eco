@@ -9,7 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const ProductList = () => {
-  const { router, getToken, user } = useAppContext();
+  const { router, getToken, user, t } = useAppContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,15 +19,14 @@ const ProductList = () => {
       const { data } = await axios.get('/api/product/seller-list', { headers: { Authorization: `Bearer ${token}` } });
       if (data.success) {
         setProducts(data.products);
-        setLoading(false);
       } else {
         toast.error('Product list fetch failed: ' + (data.message || 'Unknown error'));
-        toast('Debug: ' + JSON.stringify(data));
       }
     } catch (error) {
       const msg = error?.response?.data?.message || error.message || 'Unknown error';
       toast.error('Product list fetch failed: ' + msg);
-      toast('Debug: ' + JSON.stringify(error?.response?.data || error));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,6 +52,14 @@ const ProductList = () => {
               </tr>
             </thead>
             <tbody className="text-sm text-gray-500">
+              {products.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="text-center py-10 text-gray-400">
+                    <p className="text-base font-medium">{t('sellerNoProductsTitle')}</p>
+                    <p className="text-sm mt-1">{t('sellerNoProductsSub')}</p>
+                  </td>
+                </tr>
+              )}
               {products.map((product, index) => (
                 <tr key={index} className="border-t border-gray-500/20">
                   <td className="md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate">

@@ -7,7 +7,7 @@ import { useAppContext } from "@/context/AppContext";
 
 const AllProducts = () => {
 
-    const { products } = useAppContext();
+    const { products, isLoadingProducts, t } = useAppContext();
     const [typeFilter, setTypeFilter] = React.useState('All');
     const filteredProducts = typeFilter === 'All' ? products : products.filter(p => p.productType === typeFilter);
 
@@ -32,9 +32,25 @@ const AllProducts = () => {
                         </select>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6 mt-12 pb-14 w-full">
-                    {filteredProducts.map((product, index) => <ProductCard key={index} product={product} />)}
-                </div>
+                {isLoadingProducts ? (
+                    <div className="flex items-center justify-center w-full py-20 text-gray-400">
+                        <p>{t('loadingProducts')}</p>
+                    </div>
+                ) : filteredProducts.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center w-full py-20 text-gray-400 gap-2">
+                        <p className="text-lg font-medium">{t('noProductsFound')}</p>
+                        {typeFilter !== 'All' && (
+                            <p className="text-sm">{t('noProductsFilterSub')}</p>
+                        )}
+                        {typeFilter === 'All' && (
+                            <p className="text-sm">{t('noProductsAllSub')}</p>
+                        )}
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6 mt-12 pb-14 w-full">
+                        {filteredProducts.map((product, index) => <ProductCard key={index} product={product} />)}
+                    </div>
+                )}
             </div>
             <Footer />
         </>

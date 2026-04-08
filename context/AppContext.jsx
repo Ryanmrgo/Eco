@@ -20,6 +20,7 @@ export const AppContextProvider = (props) => {
     const { getToken } = useAuth()
 
     const [products, setProducts] = useState([])
+    const [isLoadingProducts, setIsLoadingProducts] = useState(true)
     const [userData, setUserData] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
     const [cartItems, setCartItems] = useState({})
@@ -75,7 +76,15 @@ export const AppContextProvider = (props) => {
             contactBody: 'Have questions, feedback, or need support? Reach out to the EcoHive team and we’ll be happy to help!',
             contactEmail: 'Email',
             contactPhone: 'Phone',
-            contactAddress: 'Address'
+            contactAddress: 'Address',
+            loadingProducts: 'Loading products...',
+            noProductsTitle: 'No products available yet.',
+            noProductsSub: 'Check back soon for new eco-friendly items!',
+            noProductsFound: 'No products found.',
+            noProductsFilterSub: 'Try selecting a different product type, or check back later.',
+            noProductsAllSub: 'No products have been listed yet. Check back soon!',
+            sellerNoProductsTitle: 'You have no products yet.',
+            sellerNoProductsSub: 'Add a product to get started.'
         },
         my: {
             home: 'ပင်မစာမျက်နှာ',
@@ -149,7 +158,7 @@ export const AppContextProvider = (props) => {
 
     const fetchProductData = async () => {
         try {
-            
+            setIsLoadingProducts(true)
             const {data} = await axios.get('/api/product/list')
 
             if (data.success) {
@@ -160,6 +169,8 @@ export const AppContextProvider = (props) => {
 
         } catch (error) {
             toast.error(error.message)
+        } finally {
+            setIsLoadingProducts(false)
         }
     }
 
@@ -270,7 +281,7 @@ export const AppContextProvider = (props) => {
         currency, router,
         isSeller, setIsSeller,
         userData, fetchUserData,
-        products, fetchProductData,
+        products, fetchProductData, isLoadingProducts,
         cartItems, setCartItems,
         addToCart, updateCartQuantity,
         getCartCount, getCartAmount,
