@@ -29,12 +29,16 @@ async function connectDB() {
         // include a database path (i.e. the pathname is empty or just "/").
         const hasDbPath = (() => {
             try {
-                // SRV URIs: mongodb+srv://user:pass@host/dbname?...
-                // Standard: mongodb://user:pass@host:port/dbname?...
-                const withProto = uri.replace(/^mongodb(\+srv)?:\/\//, "http://")
+                // Replace MongoDB schemes with http:// so the URL constructor
+                // can parse the URI.  Handle both mongodb:// and mongodb+srv://.
+                const withProto = uri
+                    .replace(/^mongodb\+srv:\/\//, "http://")
+                    .replace(/^mongodb:\/\//, "http://")
                 return new URL(withProto).pathname.replace(/^\//, "").length > 0
-            } catch {
-                return false
+            } catch (err) {
+                throw new Error(
+                    `MONGODB_URI is malformed and could not be parsed: ${err.message}`
+                )
             }
         })()
 
