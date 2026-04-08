@@ -1,3 +1,41 @@
+# 🌿🐝 Eco Hive
+
+A Smart & Cute Way to Save the Planet
+
+## 💡 Overview
+
+Eco Hive is a fun and eco-friendly platform designed to help people take care of the environment together. Just like a real beehive, everyone plays a role! 🐝✨
+
+The app encourages users to report waste, recycle properly, and earn rewards for helping keep the city clean. With a mix of smart technology and community power, Eco Hive makes sustainability simple, engaging, and rewarding.
+
+## 🌎 What Makes Eco Hive Special?
+
+- 🌱 **Eco-Friendly Actions Made Easy**
+  Report trash, learn recycling tips, and make a real impact in your area.
+- 📍 **Smart Location Tracking**
+  Easily mark where waste is found using maps for faster cleanup.
+- 🤖 **AI Assistant Buddy**
+  Get help from a friendly chatbot that guides you on waste sorting and eco habits.
+- 🎁 **Reward System**
+  Earn points for your actions and redeem them for vouchers, discounts, or goodies!
+- 📸 **AI Waste Detection**
+  Upload images and let AI estimate waste type and quantity.
+
+## 🐝 Why “Eco Hive”?
+
+Because teamwork makes the dream work!
+Eco Hive brings people together like a hive — small actions from many users create a big environmental impact. 💚
+
+## 🎯 Goal
+
+To build cleaner, smarter cities by encouraging people to care for their environment in a fun and interactive way.
+
+## 🚀 Vision
+
+A world where technology and community work hand-in-hand to create a greener, healthier future.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Environment setup
