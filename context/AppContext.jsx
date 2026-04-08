@@ -20,6 +20,7 @@ export const AppContextProvider = (props) => {
     const { getToken } = useAuth()
 
     const [products, setProducts] = useState([])
+    const [productsLoading, setProductsLoading] = useState(true)
     const [userData, setUserData] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
     const [cartItems, setCartItems] = useState({})
@@ -75,7 +76,10 @@ export const AppContextProvider = (props) => {
             contactBody: 'Have questions, feedback, or need support? Reach out to the EcoHive team and we’ll be happy to help!',
             contactEmail: 'Email',
             contactPhone: 'Phone',
-            contactAddress: 'Address'
+            contactAddress: 'Address',
+            loadingProducts: 'Loading products...',
+            noProductsTitle: 'No products yet',
+            noProductsBody: 'New products are coming soon. Please check back later.'
         },
         my: {
             home: 'ပင်မစာမျက်နှာ',
@@ -124,7 +128,10 @@ export const AppContextProvider = (props) => {
             contactBody: 'မေးခွန်း၊ မှတ်ချက် သို့မဟုတ် အကူအညီ လိုအပ်ပါသလား? EcoHive အဖွဲ့ကို ဆက်သွယ်နိုင်ပါသည်။',
             contactEmail: 'အီးမေးလ်',
             contactPhone: 'ဖုန်း',
-            contactAddress: 'လိပ်စာ'
+            contactAddress: 'လိပ်စာ',
+            loadingProducts: 'ပစ္စည်းများကို ရယူနေသည်...',
+            noProductsTitle: 'ပစ္စည်းမရှိသေးပါ',
+            noProductsBody: 'အသစ်သော ပစ္စည်းများ မကြာမီ ရရှိလာမည် ဖြစ်ပါသည်။ ပြန်လည် စစ်ဆေးပေးပါ။'
         }
     }
 
@@ -148,8 +155,8 @@ export const AppContextProvider = (props) => {
     }, [lang])
 
     const fetchProductData = async () => {
+        setProductsLoading(true)
         try {
-            
             const {data} = await axios.get('/api/product/list')
 
             if (data.success) {
@@ -160,6 +167,8 @@ export const AppContextProvider = (props) => {
 
         } catch (error) {
             toast.error(error.message)
+        } finally {
+            setProductsLoading(false)
         }
     }
 
@@ -270,7 +279,7 @@ export const AppContextProvider = (props) => {
         currency, router,
         isSeller, setIsSeller,
         userData, fetchUserData,
-        products, fetchProductData,
+        products, fetchProductData, productsLoading,
         cartItems, setCartItems,
         addToCart, updateCartQuantity,
         getCartCount, getCartAmount,
