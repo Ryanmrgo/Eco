@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     imageUrl: { type: String, required: true },
     cartItems: { type: Object, default: {} },
+    wishlist: { type: Array, default: [] },
     isAdmin: { type: Boolean, default: false },
     role: { type: String, default: 'buyer' }
 }, { minimize: false })

@@ -23,6 +23,7 @@ export const AppContextProvider = (props) => {
     const [userData, setUserData] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
     const [cartItems, setCartItems] = useState({})
+    const [wishlist, setWishlist] = useState([])
     // i18n language state (en | my) initialized from server-provided cookie via props
     const [lang, setLang] = useState(props.initialLang === 'my' ? 'my' : 'en')
 
@@ -177,6 +178,7 @@ export const AppContextProvider = (props) => {
             if (data.success) {
                 setUserData(data.user)
                 setCartItems(data.user.cartItems)
+                setWishlist(data.user.wishlist || [])
             } else {
                 toast.error(data.message)
             }
@@ -254,6 +256,32 @@ export const AppContextProvider = (props) => {
         return Math.floor(totalAmount * 100) / 100;
     }
 
+    const isInWishlist = (productId) => {
+        return wishlist.includes(productId)
+    }
+
+    const toggleWishlist = async (productId) => {
+        if (!user) {
+            return toast('Please login', { icon: '⚠️' })
+        }
+        try {
+            const token = await getToken()
+            const { data } = await axios.post('/api/wishlist/update', { productId }, { headers: { Authorization: `Bearer ${token}` } })
+            if (data.success) {
+                setWishlist(data.wishlist)
+                if (data.wishlist.includes(productId)) {
+                    toast.success('Added to wishlist')
+                } else {
+                    toast.success('Removed from wishlist')
+                }
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     useEffect(() => {
         fetchProductData()
     }, [])
@@ -274,6 +302,7 @@ export const AppContextProvider = (props) => {
         cartItems, setCartItems,
         addToCart, updateCartQuantity,
         getCartCount, getCartAmount,
+        wishlist, toggleWishlist, isInWishlist,
         lang, toggleLanguage, t
     }
 
