@@ -1,5 +1,21 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Environment setup
+
+1. Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+2. Fill in your real values in `.env.local` – in particular `MONGODB_URI`:
+   ```
+   MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net
+   ```
+   * Use a [MongoDB Atlas](https://www.mongodb.com/atlas) SRV connection string.
+   * If no database name is included in the URI the app defaults to `quickcart`.
+   * The app will throw a clear startup error if `MONGODB_URI` is not set.
+
+> ⚠️ **Never commit `.env` or `.env.local`.** They are listed in `.gitignore`.
+
 ## Getting Started
 
 First, run the development server:

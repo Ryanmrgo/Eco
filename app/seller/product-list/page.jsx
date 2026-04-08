@@ -19,7 +19,6 @@ const ProductList = () => {
       const { data } = await axios.get('/api/product/seller-list', { headers: { Authorization: `Bearer ${token}` } });
       if (data.success) {
         setProducts(data.products);
-        setLoading(false);
       } else {
         toast.error('Product list fetch failed: ' + (data.message || 'Unknown error'));
         toast('Debug: ' + JSON.stringify(data));
@@ -28,6 +27,8 @@ const ProductList = () => {
       const msg = error?.response?.data?.message || error.message || 'Unknown error';
       toast.error('Product list fetch failed: ' + msg);
       toast('Debug: ' + JSON.stringify(error?.response?.data || error));
+    } finally {
+      setLoading(false);
     }
   };
 
